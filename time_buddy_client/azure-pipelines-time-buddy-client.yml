@@ -36,4 +36,5 @@ steps:
 - script: wrangler pages publish dist --project-name time-buddy-client
   workingDirectory: $(working-dir)
   env:
+    CLOUDFLARE_ACCOUNT_ID: $(accountID)
     CLOUDFLARE_API_TOKEN: $(apiToken)
