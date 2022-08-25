@@ -1,31 +1,30 @@
-import { useState } from 'react';
+import { Box, Container } from '@chakra-ui/react';
+import { Routes, Route, Outlet } from 'react-router-dom';
 
-import { Routes, Route } from 'react-router-dom';
+import Home from './pages/home';
+import TimeConverter from './pages/time-converter';
+import Calendar from './pages/calendar';
+import Support from './pages/support';
 
-const Layout = () => {
-  const [count, setCount] = useState(0);
+import Navbar from './components/navbar';
 
-  return (
-    <div className="App">
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button type="button" onClick={() => setCount((c) => c + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  );
-};
+const Layout = () => (
+  <Box height="100vh" overflowY="auto">
+    <Navbar />
+    <Container pt={{ base: '8', lg: '12' }} pb={{ base: '12', lg: '24' }}>
+      <Outlet />
+    </Container>
+  </Box>
+);
 
 const App = () => (
   <Routes>
-    <Route path="/" element={<Layout />} />
+    <Route path="/" element={<Layout />}>
+      <Route index element={<Home />} />
+      <Route path="time-converter" element={<TimeConverter />} />
+      <Route path="calendar" element={<Calendar />} />
+      <Route path="support" element={<Support />} />
+    </Route>
   </Routes>
 );
 
