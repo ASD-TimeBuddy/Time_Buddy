@@ -33,7 +33,7 @@ steps:
 - script: npm i -g wrangler
   workingDirectory: $(working-dir)
 
-- script: wrangler pages publish dist --project-name time-buddy-client
+- script: wrangler pages publish dist --project-name time-buddy-client --branch main
   workingDirectory: $(working-dir)
   env:
     CLOUDFLARE_ACCOUNT_ID: $(accountID)
