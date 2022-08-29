@@ -54,3 +54,15 @@ jobs:
       ArtifactName: web-client
       StoreAsTar: true
 
+- job: Deploy
+  displayName: Deploy Client App
+    
+  pool:
+    vmImage: ubuntu-latest
+
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16.x'
+    displayName: 'Install Node.js'
+
