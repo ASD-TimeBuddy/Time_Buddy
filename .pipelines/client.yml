@@ -1,0 +1,56 @@
+variables:
+  - name: working-dir
+    value: 'time_buddy_client/'
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - 'time_buddy_client/*'
+
+jobs:
+- job: Test
+  displayName: Test Client App
+
+  pool:
+    vmImage: ubuntu-latest
+
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16.x'
+    displayName: 'Install Node.js'
+
+  - script: yarn install
+    workingDirectory: $(working-dir)
+
+  - script: yarn lint 
+    workingDirectory: $(working-dir)
+
+- job: Build
+  dependsOn: Test
+  displayName: Build Client App
+
+  pool:
+    vmImage: ubuntu-latest
+
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16.x'
+    displayName: 'Install Node.js'
+
+  - script: yarn install
+    workingDirectory: $(working-dir)
+
+  - script: yarn build
+    workingDirectory: $(working-dir)
+  
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(working-dir)/dist
+      ArtifactName: web-client
+      StoreAsTar: true
+
