@@ -11,7 +11,7 @@ trigger:
       - 'time_buddy_client/*'
 
 stages:
-- stage: Build-Client
+- stage: BuildClient
   displayName: 'Build Client App'
   jobs:
   - job: Test
@@ -57,9 +57,9 @@ stages:
         ArtifactName: web-client
         StoreAsTar: true
 
-- stage: 'Deploy-Client'
+- stage: DeployClient
   displayName: 'Deploy Client to Cloudflare'
-  dependsOn: Build-Client
+  dependsOn: BuildClient
   jobs:
   - deployment: Deploy
     
