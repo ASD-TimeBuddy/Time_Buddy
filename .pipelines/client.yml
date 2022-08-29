@@ -1,3 +1,7 @@
+variables:
+  - name: working-dir
+    value: 'time_buddy_client/'
+
 trigger:
   branches:
     include:
