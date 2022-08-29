@@ -1,0 +1,13 @@
+{
+    "event_id":1,
+    "owner":"jamessmith9956",
+    "timezone":"AEST",
+    "loaction":"UTS b11",
+    "summary":"ASD Tutoral",
+    "description": "this is a test description",
+    "dt_start":"20220829T030000Z",
+    "dt_end":"20220829T050000Z",
+    "sequence":0,
+    "status":"confirmed",
+    "repetition":"weekly"
+}
