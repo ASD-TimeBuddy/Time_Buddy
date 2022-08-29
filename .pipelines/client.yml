@@ -65,6 +65,8 @@ stages:
     
     pool:
       vmImage: ubuntu-latest
+    
+    environment: Client
 
     strategy:
       runOnce:
