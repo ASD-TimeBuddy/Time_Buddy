@@ -10,47 +10,83 @@ trigger:
     include:
       - 'time_buddy_client/*'
 
-jobs:
-- job: Test
-  displayName: Test Client App
+stages:
+- stage: BuildClient
+  displayName: 'Build Client App'
+  jobs:
+  - job: Test
+    displayName: Test Client App
 
-  pool:
-    vmImage: ubuntu-latest
+    pool:
+      vmImage: ubuntu-latest
 
-  steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '16.x'
-    displayName: 'Install Node.js'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '16.x'
+      displayName: 'Install Node.js'
 
-  - script: yarn install
-    workingDirectory: $(working-dir)
+    - script: yarn install
+      workingDirectory: $(working-dir)
 
-  - script: yarn lint 
-    workingDirectory: $(working-dir)
+    - script: yarn lint 
+      workingDirectory: $(working-dir)
 
-- job: Build
-  dependsOn: Test
-  displayName: Build Client App
+  - job: Build
+    dependsOn: Test
+    displayName: Build Client App
 
-  pool:
-    vmImage: ubuntu-latest
+    pool:
+      vmImage: ubuntu-latest
 
-  steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '16.x'
-    displayName: 'Install Node.js'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '16.x'
+      displayName: 'Install Node.js'
 
-  - script: yarn install
-    workingDirectory: $(working-dir)
+    - script: yarn install
+      workingDirectory: $(working-dir)
 
-  - script: yarn build
-    workingDirectory: $(working-dir)
+    - script: yarn build
+      workingDirectory: $(working-dir)
   
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(working-dir)/dist
-      ArtifactName: web-client
-      StoreAsTar: true
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: $(working-dir)/dist
+        ArtifactName: web-client
+        StoreAsTar: true
+
+- stage: DeployClient
+  displayName: 'Deploy Client to Cloudflare'
+  dependsOn: BuildClient
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  jobs:
+  - deployment: Deploy
+    
+    pool:
+      vmImage: ubuntu-latest
+    
+    environment: Client
+
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: web-client
+
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '16.x'
+            displayName: 'Install Node.js'
+          
+          - script: npm i -g wrangler
+            workingDirectory: $(working-dir)
+
+          - script: wrangler pages publish dist --project-name time-buddy-client --branch main
+            workingDirectory: $(working-dir)
+            env:
+              CLOUDFLARE_ACCOUNT_ID: $(accountID)
+              CLOUDFLARE_API_TOKEN: $(apiToken)
 
