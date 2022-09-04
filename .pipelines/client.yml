@@ -81,11 +81,14 @@ stages:
               versionSpec: '16.x'
             displayName: 'Install Node.js'
           
+          - script: tar -xf web-client.tar
+            workingDirectory: web-client/
+          
           - script: npm i -g wrangler
-            workingDirectory: $(working-dir)
+            workingDirectory: web-client/
 
-          - script: wrangler pages publish dist --project-name time-buddy-client --branch main
-            workingDirectory: $(working-dir)
+          - script: wrangler pages publish dist --project-name web-client/ --branch main
+            workingDirectory: web-client/
             env:
               CLOUDFLARE_ACCOUNT_ID: $(accountID)
               CLOUDFLARE_API_TOKEN: $(apiToken)
