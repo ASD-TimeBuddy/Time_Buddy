@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 import { BrowserRouter } from 'react-router-dom';
 import { ColorModeScript, ChakraProvider } from '@chakra-ui/react';
+import { SWRConfig } from 'swr';
 
 import theme from './theme';
 
@@ -13,7 +14,14 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <BrowserRouter>
       <ChakraProvider theme={theme}>
-        <App />
+        <SWRConfig
+          value={{
+            fetcher: (resource, init) =>
+              fetch(resource, init).then((res) => res.json()),
+          }}
+        >
+          <App />
+        </SWRConfig>
       </ChakraProvider>
     </BrowserRouter>
   </React.StrictMode>,
