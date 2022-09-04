@@ -55,7 +55,6 @@ stages:
       inputs:
         pathToPublish: $(working-dir)/dist
         ArtifactName: web-client
-        StoreAsTar: true
 
 - stage: DeployClient
   displayName: 'Deploy Client to Cloudflare'
@@ -81,14 +80,9 @@ stages:
               versionSpec: '16.x'
             displayName: 'Install Node.js'
           
-          - script: tar -xf web-client.tar
-            workingDirectory: web-client/
-          
           - script: npm i -g wrangler
-            workingDirectory: web-client/
 
-          - script: wrangler pages publish dist --project-name web-client/ --branch main
-            workingDirectory: web-client/
+          - script: wrangler pages publish dist --project-name $(Pipeline.Workspace)/web-client --branch main
             env:
               CLOUDFLARE_ACCOUNT_ID: $(accountID)
               CLOUDFLARE_API_TOKEN: $(apiToken)
