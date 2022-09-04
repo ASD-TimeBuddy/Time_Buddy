@@ -1,9 +1,127 @@
 import { useEffect, useState } from 'react';
-import { Alert, AlertIcon } from '@chakra-ui/react';
-// import useSWR from 'swr';
-// import { Text } from '@chakra-ui/react';
-// import axios from "axios";
+import {
+  Alert,
+  AlertIcon,
+  Box,
+  Container,
+  Stack,
+  Icon,
+  Text,
+  Skeleton,
+  SkeletonText,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import { FiCloud, FiThermometer, FiGlobe } from 'react-icons/fi';
+import useSWR from 'swr';
 // import dayjs from 'dayjs';
+
+// Always try to split code into as many seperate functions as possible
+
+// use this to fetch the location information from the website
+// use useSWR for all data fetching
+const useFetchLocation = () => {
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const { data, error } = useSWR(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=aab18fa42aadc68ffbaecb30509333fe&units=metric`,
+  );
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLatitude(position.coords.latitude);
+      setLongitude(position.coords.longitude);
+    });
+  }, [latitude, longitude, data]);
+
+  return {
+    locationData: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
+
+// this shows the location card content thingo
+const LocationCardContent = () => {
+  const { locationData, isLoading, isError } = useFetchLocation();
+
+  if (isLoading) {
+    return (
+      <>
+        <Skeleton h="32px" />
+        <SkeletonText mt="2" noOfLines={2} />
+        <Skeleton mt="2" h="32px" />
+        <SkeletonText mt="2" noOfLines={2} />
+        <Skeleton mt="2" h="32px" />
+        <SkeletonText mt="2" noOfLines={2} />
+      </>
+    );
+  }
+
+  if (isError) {
+    return <Text>Unexpected Error occurred fetching data...</Text>;
+  }
+
+  return (
+    <>
+      <Stack justify="start" align="center" direction="row" spacing="4">
+        <Icon as={FiGlobe} boxSize="6" />
+        <Stack spacing="0.5" fontSize="sm">
+          <Text color="emphasized" fontWeight="medium">
+            City
+          </Text>
+          <Text color="muted">{locationData.name}</Text>
+        </Stack>
+      </Stack>
+      <Stack justify="start" align="center" direction="row" spacing="4">
+        <Icon as={FiThermometer} boxSize="6" />
+        <Stack spacing="0.5" fontSize="sm">
+          <Text color="emphasized" fontWeight="medium">
+            Tempreture
+          </Text>
+          <Text color="muted">{locationData.main.temp}</Text>
+        </Stack>
+      </Stack>
+      <Stack justify="start" align="center" direction="row" spacing="4">
+        <Icon as={FiCloud} boxSize="6" />
+        <Stack spacing="0.5" fontSize="sm">
+          <Text color="emphasized" fontWeight="medium">
+            Weather
+          </Text>
+          <Text color="muted">{locationData.weather[0].description}</Text>
+        </Stack>
+      </Stack>
+    </>
+  );
+};
+
+const LocationCard = () => (
+  <Container maxW="3xl" py="4">
+    <Box
+      bg="bg-surface"
+      boxShadow={useColorModeValue('sm', 'sm-dark')}
+      borderRadius="lg"
+      p={{ base: '4', md: '6' }}
+    >
+      <Stack spacing="5">
+        <Stack spacing="1">
+          <Text fontSize="lg" fontWeight="medium">
+            Location
+          </Text>
+          <Text fontSize="sm" color="muted">
+            Do more with time buddy location services.
+          </Text>
+        </Stack>
+        <Box
+          borderWidth={{ base: '0', md: '1px' }}
+          p={{ base: '0', md: '4' }}
+          borderRadius="lg"
+        >
+          <LocationCardContent />
+        </Box>
+      </Stack>
+    </Box>
+  </Container>
+);
 
 type CountdownTimerProps = {
   eventDate: Date;
@@ -58,54 +176,12 @@ const CountdownTimer = (props: CountdownTimerProps) => {
 };
 
 const TimeConverter = () => {
-  /*
-  const { locationData, apiError } = useSWR(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=aab18fa42aadc68ffbaecb30509333fe&units=metric`,
-  );
-  // Location and Weather
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-  const [weather, setWeather] = useState('');
-  const [temperature, setTemperature] = useState(0);
-  const [cityName, setCityName] = useState('');
-
-  const savePositionToState = (position) => {
-    setLatitude(position.coords.latitude);
-    setLongitude(position.coords.longitude);
-  };
-  */
-  /*
-    const fetchLocation = async () => {
-        try {
-            navigator.geolocation.getCurrentPosition(
-                savePositionToState
-            );
-            const res = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=aab18fa42aadc68ffbaecb30509333fe&units=metric`
-            );
-            setTemperature(res.data.main.temp);
-            setCityName(res.data.name);
-            setWeather(res.data.weather[0].main);
-            // console.log(res.data);
-        } catch (err) {
-            // console.error(err);
-        }
-    };
-    useEffect(() => {
-        fetchLocation();
-    }, [latitude, longitude]);
-     */
-  // Countdown Timer
-
   const target = new Date('11/28/2022 13:48:59');
 
   return (
     <>
-      <b>
-        <h1>Location:</h1>
-      </b>
-      <h1> </h1>
       <CountdownTimer eventDate={target} />
+      <LocationCard />
     </>
   );
 };
