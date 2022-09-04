@@ -82,7 +82,7 @@ stages:
           
           - script: npm i -g wrangler
 
-          - script: wrangler pages publish web-client --project-name time-buddy-client --branch main
+          - script: wrangler pages publish $(Pipeline.Workspace)/web-client --project-name time-buddy-client --branch main
             env:
               CLOUDFLARE_ACCOUNT_ID: $(accountID)
               CLOUDFLARE_API_TOKEN: $(apiToken)
