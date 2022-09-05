@@ -72,6 +72,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'time_buddy.wsgi.application'
 
+# pagination class attrubutes none by default, also accesible through pagination_class view attribute
+# https://www.django-rest-framework.org/api-guide/pagination/#setting-the-pagination-style
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE':100
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

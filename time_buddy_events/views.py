@@ -25,39 +25,74 @@ def api_overview(request): #pass in html request
     return Response(api_urls)
 
 # add events using only : 'location','summary','description'
-@api_view(['POST'])
-def add_events(request):
-    event = Event_Serializer(data=request.data)
+#@api_view(['POST'])
+#def add_events(request):
+#    event = Event_Serializer(data=request.data)
 
     # validating for already existing data
-    if Event.objects.filter(**request.data).exists():
-        raise serializers.ValidationError('This data already exists')
+#    if Event.objects.filter(**request.data).exists():
+#        raise serializers.ValidationError('This data already exists')
     
-    if event.is_valid():
-        event.save()
-        return Response(event.data)
-    else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+#    if event.is_valid():
+#        event.save()
+#        return Response(event.data)
+#    else:
+#        return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['GET'])
-def view_events(request):
-    #any decrypting or user ID should probably happen here
+#@api_view(['GET'])
+#def view_events(request):
+#    #any decrypting or user ID should probably happen here#
 
-    #checking for the parameters from the URL 
-    if request.query_params:
-        #should clean query params before passing
-        events = Event.objects.filter(**request.query_params.dict())
-    else:
-        #delete <>
-        events = Event.objects.all()
+#    #checking for the parameters from the URL 
+#    if request.query_params:
+#        #should clean query params before passing
+#        events = Event.objects.filter(**request.query_params.dict())
+#    else:
+#        #delete <>
+#        events = Event.objects.all()
 
     #return any events found, else 404 not found.
-    if events:
+#    if events:
         #force multiple values in serializer, else API can't find fields
-        serializer = Event_Serializer(events, many=True)
-        return Response(serializer.data)
+#        serializer = Event_Serializer(events, many=True)
+#        return Response(serializer.data)
+#    else:
+#        return Response(status=status.HTTP_404_NOT_FOUND)
+
+api_view(['GET','POST'])
+def view_events(request):
+    if request.method = 'GET':
+        #any decrypting or user ID should probably happen here
+
+        #checking for the parameters from the URL 
+        if request.query_params:
+            #should clean query params before passing
+            events = Event.objects.filter(**request.query_params.dict())
+        else:
+            #delete <>
+            events = Event.objects.all()
+
+        #return any events found, else 404 not found.
+        if events:
+            #force multiple values in serializer, else API can't find fields
+            serializer = Event_Serializer(events, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    else if request.method = 'POST':
+        event = Event_Serializer(data=request.data)
+
+         validating for already existing data
+        if Event.objects.filter(**request.data).exists():
+            raise serializers.ValidationError('This data already exists')
+        
+        if event.is_valid():
+            event.save()
+            return Response(event.data)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
     else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 @api_view(['POST'])
 def update_events(request, pk):
