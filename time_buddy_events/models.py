@@ -33,7 +33,7 @@ class event_instance(model.Models):
     
     
 class time_zone(model.Models):
-    tz_id = models.IntegerField("tz_id",verbose_name=_("Time Zone ID")),primary_key=True,unique=True,default=1)
+    tz_id = models.IntegerField("tz_id",verbose_name=_("Time Zone ID"),primary_key=True,unique=True,default=1)
     tz_name = models.CharField("tz_name",verbose_name=_("Time Zone Name"), max_length=50)
 
     class Meta:
@@ -50,7 +50,7 @@ class user(model.Models):
     user_id = models.UUIDField("user_id",verbose_name=_("User ID"),primary_key=True,default=uuid.uuid4,editable=false)
 
     class Meta:
-        db_table = 'users
+        db_table = 'users'
         managed = True
         verbose_name = 'User'
         verbose_name_plural = 'Users'
