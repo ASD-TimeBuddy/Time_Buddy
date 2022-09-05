@@ -55,7 +55,6 @@ stages:
       inputs:
         pathToPublish: $(working-dir)/dist
         ArtifactName: web-client
-        StoreAsTar: true
 
 - stage: DeployClient
   displayName: 'Deploy Client to Cloudflare'
@@ -82,10 +81,8 @@ stages:
             displayName: 'Install Node.js'
           
           - script: npm i -g wrangler
-            workingDirectory: $(working-dir)
 
-          - script: wrangler pages publish dist --project-name time-buddy-client --branch main
-            workingDirectory: $(working-dir)
+          - script: wrangler pages publish $(Pipeline.Workspace)/web-client --project-name time-buddy-client --branch main
             env:
               CLOUDFLARE_ACCOUNT_ID: $(accountID)
               CLOUDFLARE_API_TOKEN: $(apiToken)
