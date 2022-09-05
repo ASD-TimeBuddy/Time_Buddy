@@ -1,6 +1,6 @@
 # NodeJS
 node_modules
-.yarn
+time_buddy_client/.yarn
 
 # Secrets #
 secrets.json
