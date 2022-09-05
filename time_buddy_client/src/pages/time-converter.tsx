@@ -82,7 +82,7 @@ const LocationCardContent = () => {
         <Icon as={FiThermometer} boxSize="6" />
         <Stack spacing="0.5" fontSize="sm">
           <Text color="emphasized" fontWeight="medium">
-            Tempreture
+            Temperature
           </Text>
           <Text color="muted">{locationData.main.temp}</Text>
         </Stack>
