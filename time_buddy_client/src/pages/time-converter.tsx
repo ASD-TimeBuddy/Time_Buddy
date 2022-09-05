@@ -13,6 +13,26 @@ import {
 } from '@chakra-ui/react';
 import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
 import useSWR from 'swr';
+import useDate from '../hooks/useDate';
+
+const SelectTime = () => {
+  const { date, time, wish } = useDate();
+
+  return (
+    <div className="greetings-container">
+      <h1>{wish}</h1>
+
+      <div>
+        <h3>
+          {date}
+          <br />
+          {time}
+        </h3>
+      </div>
+    </div>
+  );
+};
+
 // import dayjs from 'dayjs';
 
 // Always try to split code into as many seperate functions as possible
@@ -194,6 +214,7 @@ const TimeConverter = () => {
     <>
       <CountdownTimer eventDate={target} />
       <LocationCard />
+      <SelectTime />
     </>
   );
 };

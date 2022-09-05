@@ -1,3 +1,7 @@
+# NodeJS
+node_modules
+.yarn
+
 # Secrets #
 secrets.json
 
