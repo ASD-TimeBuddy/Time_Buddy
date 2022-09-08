@@ -1,30 +1,25 @@
-import { Stack, Heading, Text, Divider } from '@chakra-ui/react';
-import useSWR from 'swr';
+import { Stack, Box, Heading, Text, Divider } from '@chakra-ui/react';
+import useSWR, { Fetcher } from 'swr';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://othscwzdrhpeueyhvlpq.supabase.co';
-const supabaseKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90aHNjd3pkcmhwZXVleWh2bHBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjIzMDM4OTUsImV4cCI6MTk3Nzg3OTg5NX0.BysQ25yYAady3RfYg_NloFw2cozewqzTPawP8SCM56k';
+import { supabaseKey, supabaseUrl } from '../constants/supabase';
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const faqFetcher = async (range: string) => {
-  // const { data, error } = await supabase.from('support_faq').select('*');
-  const { data: support_faq, error } = await supabase
-    .from('support_faq')
-    .select('*');
+const fetchAll: Fetcher<FaqType[], string> = async (table: string) => {
+  const { data: supportFaq, error } = await supabase.from(table).select('*');
 
   if (error) {
     // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw error;
   }
 
-  console.log(support_faq);
-  return support_faq;
+  return supportFaq;
 };
 
 type FaqType = {
   id: number;
-  createdAt: number;
+  created_at: string;
   question: string;
   answer: string;
 };
@@ -37,36 +32,38 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
   const { qa } = props;
 
   return (
-    <>
+    <Box>
       <Text
         fontSize="md"
         fontWeight="medium"
       >{`Question: ${qa.question}`}</Text>
       <Text fontSize="sm">{`Answer: ${qa.answer}`}</Text>
-    </>
+    </Box>
   );
 };
 
 const FrequentlyAskedQuestions = () => {
-  const { data } = useSWR('*', faqFetcher);
+  const { data } = useSWR('support_faq', fetchAll);
 
-  const fakeData: FaqType[] = [
-    {
-      id: 1,
-      createdAt: Date.now(),
-      question: 'First Question!',
-      answer: 'first answer!',
-    },
-  ];
-  console.log(data);
+  if (!data) {
+    return (
+      <Stack spacing="5" mb="8">
+        <Text fontSize="lg" fontWeight="medium">
+          Frequently Asked Questions
+        </Text>
+        <Divider />
+      </Stack>
+    );
+  }
+
   return (
     <Stack spacing="5" mb="8">
       <Text fontSize="lg" fontWeight="medium">
         Frequently Asked Questions
       </Text>
       <Divider />
-      {fakeData.map((dataT: FaqType) => (
-        <QuestionAnswer qa={dataT} />
+      {data.map((dataT: FaqType) => (
+        <QuestionAnswer key={dataT.id} qa={dataT} />
       ))}
     </Stack>
   );
