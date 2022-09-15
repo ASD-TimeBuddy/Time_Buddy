@@ -32,6 +32,9 @@ stages:
     - script: yarn lint 
       workingDirectory: $(working-dir)
 
+    - script: yarn test
+      workingDirectory: $(working-dir)
+  
   - job: Build
     dependsOn: Test
     displayName: Build Client App

@@ -17,9 +17,11 @@
     "jsx": "react-jsx"
   },
   "include": [
-      "src",
-      ".eslintrc.js"
+    "src",
+    ".eslintrc.js",
+    "jest.config.js",
+    "config/jest/fileTransform.js",
+    "config/jest/setupTests.js"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
-
