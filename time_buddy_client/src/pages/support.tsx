@@ -71,7 +71,7 @@ const FrequentlyAskedQuestions = () => {
 
 const Support = () => (
   <>
-    <Heading size="md" mb="8">
+    <Heading size="md" mb="8" data-testid="support-header">
       Time Buddy Support
     </Heading>
     <FrequentlyAskedQuestions />
