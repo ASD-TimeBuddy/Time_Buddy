@@ -25,7 +25,12 @@ const Navbar = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
-    <Box as="nav" bg="bg-accent" color="on-accent">
+    <Box
+      as="nav"
+      bg="bg-accent"
+      color="on-accent"
+      data-testid="navbar-container"
+    >
       <Container py={{ base: '3', lg: '4' }}>
         <Flex justify="space-between">
           <HStack spacing="4">
@@ -52,6 +57,7 @@ const Navbar = () => {
                   to="/support"
                   icon={<FiHelpCircle fontSize="1.25rem" />}
                   aria-label="Support"
+                  data-testid="support-link"
                 />
               </ButtonGroup>
               <Avatar

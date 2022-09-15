@@ -16,12 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src",
-    ".eslintrc.js",
-    "jest.config.js",
-    "config/jest/fileTransform.js",
-    "config/jest/setupTests.js"
-  ],
+  "include": ["./src"],
+  "exclude": ["./src/__tests__/**", "./src/__mocks__/**", "./src/test-utils"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
