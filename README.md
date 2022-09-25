@@ -44,7 +44,7 @@ Timezone sensitive event planning app/api
 2. Start virtual environment `source ./venv/bin/activate` or
    `.\venv\Scripts\activate.bat` on windows.
 
-3. Install dependancies. `pip -r requirements.txt` (only need to do this once)
+3. Install dependancies. `pip install -r requirements.txt` (only need to do this once)
 
 4. Run Django with `python manage.py runserver`
 
