@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('events/', include('time_buddy_events.urls')),
+    # path('support/', include('time_buddy_support.urls')),
     path('admin/', admin.site.urls),
-    path('time_buddy_events/', include('time_buddy_events.urls')),
 ]
