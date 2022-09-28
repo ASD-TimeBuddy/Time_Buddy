@@ -37,15 +37,16 @@ REST_FRAMEWORK = {
 }
 
 INSTALLED_APPS = [
+    'time_buddy_events.apps.TimeBuddyEventsConfig',
+    'time_buddy_support.apps.TimeBuddySupportConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'rest_framework',
-    'time_buddy_events.apps.TimeBuddyEventsConfig',
-    'time_buddy_support.apps.TimeBuddySupportConfig',
 ]
 
 MIDDLEWARE = [
