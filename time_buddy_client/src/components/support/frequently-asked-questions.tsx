@@ -1,4 +1,4 @@
-import { Stack, Box, Text, Divider, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from '@chakra-ui/react';
+import { Stack, Text, Divider, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from '@chakra-ui/react';
 import useSWR from 'swr';
 
 type FAQType = {
