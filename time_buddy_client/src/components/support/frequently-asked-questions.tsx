@@ -1,4 +1,4 @@
-import { Stack, Text, Divider, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from '@chakra-ui/react';
+import { Text, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, SkeletonText } from '@chakra-ui/react';
 import useSWR from 'swr';
 
 type FAQType = {
@@ -36,14 +36,7 @@ const FrequentlyAskedQuestions = () => {
   const { data } = useSWR('http://localhost:8000/support/question-answer');
 
   if (!data) {
-    return (
-      <Stack spacing="5" mb="8">
-        <Text fontSize="lg" fontWeight="medium">
-          Frequently Asked Questions
-        </Text>
-        <Divider />
-      </Stack>
-    );
+    return <SkeletonText noOfLines={4} />
   }
 
   const { results } = data;
