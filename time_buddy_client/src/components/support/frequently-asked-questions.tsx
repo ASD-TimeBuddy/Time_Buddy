@@ -44,7 +44,7 @@ const FrequentlyAskedQuestions = () => {
   return (
     <Accordion>
 {results.map((dataT: FAQType) => (
-        <QuestionAnswer key={results.id} qa={dataT} />
+        <QuestionAnswer key={dataT.id} qa={dataT} />
       ))}
     </Accordion>
       
