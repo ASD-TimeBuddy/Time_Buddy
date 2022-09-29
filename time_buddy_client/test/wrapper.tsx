@@ -30,7 +30,7 @@ const fetcher: Fetcher = async (url: string) => {
   return res.json();
 };
 
-const swrConfig: SWRConfiguration = { fetcher };
+const swrConfig: SWRConfiguration = { fetcher, dedupingInterval: 0 };
 
 const Wrapper = ({ children }: any) => (
   <ChakraProvider theme={theme}>
