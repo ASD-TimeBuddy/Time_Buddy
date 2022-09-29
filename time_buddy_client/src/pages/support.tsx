@@ -15,22 +15,26 @@ import FrequentlyAskedQuestions from '../components/support/frequently-asked-que
 
 const Support = () => (
   <>
-    <Heading size="md" mb="8" data-testid="support-header">
+    <Heading size="md" mb="8">
       Time Buddy Support
     </Heading>
     <Tabs variant="soft-rounded" colorScheme="blue">
       <Flex justify="center">
         <TabList>
-          <Tab mx="4">FAQ</Tab>
-          <Tab mx="4">Contact Us</Tab>
+          <Tab mx="4" data-testid="faq-button">
+            FAQ
+          </Tab>
+          <Tab mx="4" data-testid="contact-button">
+            Contact Us
+          </Tab>
         </TabList>
       </Flex>
 
       <TabPanels>
-        <TabPanel>
+        <TabPanel data-testid="faq-panel">
           <FrequentlyAskedQuestions />
         </TabPanel>
-        <TabPanel>
+        <TabPanel data-testid="contact-panel">
           <Stack spacing="5">
             <Text fontSize="lg" fontWeight="medium">
               Have a problem? Contact us

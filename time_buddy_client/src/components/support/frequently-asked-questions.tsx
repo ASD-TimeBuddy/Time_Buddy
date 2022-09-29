@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import useSWR from 'swr';
 
-import { QUESTION_ANSWER_URL } from '../../constants/api';
+import { questionUrlBuilder } from '../../constants/api';
 
 type FAQType = {
   id: number;
@@ -41,16 +41,16 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 };
 
 const FrequentlyAskedQuestions = () => {
-  const { data } = useSWR(QUESTION_ANSWER_URL);
+  const { data } = useSWR(questionUrlBuilder());
 
   if (!data) {
-    return <SkeletonText noOfLines={4} />;
+    return <SkeletonText noOfLines={4} data-testid="faq-loading" />;
   }
 
   const { results } = data;
 
   return (
-    <Accordion>
+    <Accordion data-testid="faq-accordion">
       {results.map((dataT: FAQType) => (
         <QuestionAnswer key={dataT.id} qa={dataT} />
       ))}
