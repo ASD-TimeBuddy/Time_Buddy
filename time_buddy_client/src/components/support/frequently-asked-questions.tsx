@@ -9,6 +9,8 @@ import {
 } from '@chakra-ui/react';
 import useSWR from 'swr';
 
+import { QUESTION_ANSWER_URL } from '../../constants/api';
+
 type FAQType = {
   id: number;
   question: string;
@@ -39,7 +41,7 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 };
 
 const FrequentlyAskedQuestions = () => {
-  const { data } = useSWR('http://localhost:8000/support/question-answer');
+  const { data } = useSWR(QUESTION_ANSWER_URL);
 
   if (!data) {
     return <SkeletonText noOfLines={4} />;
@@ -57,4 +59,3 @@ const FrequentlyAskedQuestions = () => {
 };
 
 export default FrequentlyAskedQuestions;
-
