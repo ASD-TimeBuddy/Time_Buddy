@@ -57,3 +57,6 @@ stages:
               command: 'buildAndPush'
               Dockerfile: './Dockerfile'
               buildContext: '.'
+              tags: |
+                build-$(Build.BuildId)
+                latest
