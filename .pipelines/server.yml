@@ -17,9 +17,6 @@ stages:
             Python38:
               PYTHON_VERSION: "3.8"
           maxParallel: 4
-        
-        env:
-          DJANGO_DEBUG: true
 
         steps:
           - task: UsePythonVersion@0
