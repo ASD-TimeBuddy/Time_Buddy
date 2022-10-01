@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import useSWR from 'swr';
+// import useSWR from 'swr';
 
 import Wrapper from '../../wrapper';
 import FrequentlyAskedQuestions from '../../../src/components/support/frequently-asked-questions';
