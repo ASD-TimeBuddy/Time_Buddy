@@ -18,6 +18,7 @@
   },
   "include": [
     "src",
+    "test",
     ".eslintrc.js",
     "jest.config.js",
     "config/jest/fileTransform.js",

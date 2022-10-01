@@ -1,0 +1,62 @@
+trigger:
+  - main
+  - internal/*
+
+stages:
+  - stage: ServerCI
+    displayName: "Server Continuous Integration"
+    jobs:
+      - job: Test
+        displayName: "Test the API"
+
+        pool:
+          vmImage: ubuntu-latest
+
+        strategy:
+          matrix:
+            Python38:
+              PYTHON_VERSION: "3.8"
+          maxParallel: 4
+
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: $(PYTHON_VERSION)
+              architecture: "x64"
+
+          - script: |
+              python -m pip install --upgrade pip setuptools wheel
+              pip install -r requirements.txt
+              pip install unittest-xml-reporting
+            displayName: "Install prerequisites"
+
+          - script: |
+              pushd '$(projectRoot)'
+              DJANGO_DEBUG=true python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
+            displayName: "Run tests"
+  
+      - job: Build
+        dependsOn: Test
+        displayName: Build the API
+
+        pool:
+          vmImage: ubuntu-latest
+
+        steps:
+          - task: Docker@2
+            displayName: Login to Docker
+            inputs:
+              containerRegistry: 'bebopbamfDockerHub'
+              command: 'login'
+          
+          - task: Docker@2
+            displayName: Build and Push Docker Image
+            inputs:
+              containerRegistry: 'bebopbamfDockerHub'
+              repository: 'bebopbamf/time-buddy'
+              command: 'buildAndPush'
+              Dockerfile: './Dockerfile'
+              buildContext: '.'
+              tags: |
+                build-$(Build.BuildId)
+                latest

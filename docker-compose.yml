@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: timebuddydb
+    image: postgres:alpine
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=timebuddydb
+      - POSTGRES_USER=timebuddyuser
+      - POSTGRES_PASSWORD=Strong!Password
+  django:
+    build: .
+    
