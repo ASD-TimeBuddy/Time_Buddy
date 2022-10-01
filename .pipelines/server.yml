@@ -17,6 +17,9 @@ stages:
             Python38:
               PYTHON_VERSION: "3.8"
           maxParallel: 4
+        
+        env:
+          DJANGO_DEBUG: true
 
         steps:
           - task: UsePythonVersion@0
@@ -32,20 +35,19 @@ stages:
 
           - script: |
               pushd '$(projectRoot)'
-              python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
+              DJANGO_DEBUG=true python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
             displayName: "Run tests"
-            env: DJANGO_DEBUG=true
   
-        - job: Build
-          dependsOn: Test
-          displayName: Build the API
+      - job: Build
+        dependsOn: Test
+        displayName: Build the API
 
-          pool:
-            vmImage: ubuntu-latest
+        pool:
+          vmImage: ubuntu-latest
 
-          steps:
-            - task: Docker@2
-              displayName: Build
-              inputs:
-                command: build
-                tags: timebuddyapi
+        steps:
+          - task: Docker@2
+            displayName: Build
+            inputs:
+              command: build
+              tags: timebuddyapi
