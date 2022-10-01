@@ -53,7 +53,7 @@ stages:
             displayName: Build and Push Docker Image
             inputs:
               containerRegistry: 'bebopbamfDockerHub'
-              repository: 'time-buddy'
+              repository: 'bebopbamf/time-buddy'
               command: 'buildAndPush'
               Dockerfile: './Dockerfile'
               buildContext: '.'
