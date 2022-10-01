@@ -44,7 +44,16 @@ stages:
 
         steps:
           - task: Docker@2
-            displayName: Build
+            displayName: Login to Docker
             inputs:
-              command: build
-              tags: timebuddyapi
+              containerRegistry: 'bebopbamfDockerHub'
+              command: 'login'
+          
+          - task: Docker@2
+            displayName: Build and Push Docker Image
+            inputs:
+              containerRegistry: 'bebopbamfDockerHub'
+              repository: 'time-buddy'
+              command: 'buildAndPush'
+              Dockerfile: './Dockerfile'
+              buildContext: '.'
