@@ -1,6 +1,6 @@
 // host constants
 const DEVELOPMENT = 'http://localhost:8000';
-const PRODUCTION = '';
+const PRODUCTION = 'https://time-buddy-app-zqdu8.ondigitalocean.app';
 
 // support uri constants
 const SUPPORT = '/support';
@@ -14,7 +14,7 @@ export const urlBuilder =
 export const devBuilder = urlBuilder(DEVELOPMENT);
 export const prodBuilder = urlBuilder(PRODUCTION);
 
-export const reqUriBuilder = devBuilder;
+export const reqUriBuilder = prodBuilder;
 
 // support urls
 export const questionUrlBuilder = reqUriBuilder(QUESTION_ANSWER);
