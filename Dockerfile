@@ -14,6 +14,8 @@ RUN pip install -r requirements.txt
 
 FROM python:3.10-alpine as app
 
+RUN apk add --no-cache libpq
+
 WORKDIR /usr/src/app
 
 COPY --from=build /opt/venv /opt/venv
