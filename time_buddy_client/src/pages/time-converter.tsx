@@ -64,8 +64,19 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
 
-  const date = new Date();
-  const dateToString = date.toString();
+  const dateToString = new Date();
+
+
+  let date = new Date().toString();
+  const [currentDate, setCurrentDate] = useState(date);
+
+  const updateDate = () => {
+    let date = new Date().toString();
+    setCurrentDate(date);
+  }
+
+  setInterval(updateDate, 1000);
+
 
   if (isLoading) {
     return (
@@ -92,7 +103,7 @@ const LocationCardContent = () => {
           <Text color="emphasized" fontWeight="medium">
             City
           </Text>
-          <Text color="muted">{locationData.name}</Text>
+          <Text color="muted" data-testid="location-test">{locationData.name}</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
@@ -101,7 +112,7 @@ const LocationCardContent = () => {
           <Text color="emphasized" fontWeight="medium">
             Current Time
           </Text>
-          <Text color="muted">{dateToString}</Text>
+          <Text color="muted">{currentDate}</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
@@ -200,7 +211,7 @@ const CountdownTimer = (props: CountdownTimerProps) => {
       <AlertIcon /> Event is happening now!
     </Alert>
   ) : (
-    <Alert status="info">
+    <Alert status="info" data-testid="countdown-test">
       <AlertIcon />
       {`Time till event: ${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`}
     </Alert>
