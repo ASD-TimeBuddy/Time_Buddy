@@ -130,7 +130,7 @@ const TimeZoneConverter = () => {
      
         <GridItem colSpan={5}>
             <Checkbox defaultChecked={currentSelected} onChange={handleCheckboxSelect}/>
-            <Text>Use current timezone and date/time: <b>{timeZone +"    "+(format(new Date(), "MMM dd, yyyy h:mm aa"))}</b></Text>
+            <Text>Use current timezone: <b>{timeZone +"    "+(format(new Date(), "MMM dd, yyyy h:mm aa"))}</b></Text>
             <br/>
         </GridItem>
         <GridItem colSpan={1}>
