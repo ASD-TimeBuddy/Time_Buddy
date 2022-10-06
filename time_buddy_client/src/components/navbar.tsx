@@ -46,6 +46,9 @@ const Navbar = () => {
                 <Button as={RRLink} to="/calendar">
                   Calendar
                 </Button>
+                <Button as={RRLink} to="/login">
+                  Login
+                </Button>
               </ButtonGroup>
             )}
           </HStack>
