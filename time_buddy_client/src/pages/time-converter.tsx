@@ -64,9 +64,6 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
 
-  const dateToString = new Date();
-
-
   let date = new Date().toString();
   const [currentDate, setCurrentDate] = useState(date);
 
@@ -121,7 +118,7 @@ const LocationCardContent = () => {
           <Text color="emphasized" fontWeight="medium">
             Temperature
           </Text>
-          <Text color="muted">{locationData.main.temp}</Text>
+          <Text color="muted">{locationData.main.temp}°C</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
