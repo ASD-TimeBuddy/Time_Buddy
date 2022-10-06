@@ -25,24 +25,7 @@ import TimezoneSelect from 'react-timezone-select';
 import timeZoneConverter from 'time-zone-converter';
 import { format } from "date-fns";
  
- 
-const SelectTime = () => {
-  const { date, time, wish } = useDate();
- 
-  return (
-    <div className="greetings-container">
-      <h1>{wish}</h1>
- 
-      <div>
-        <h3>
-          {date}
-          <br />
-          {time}
-        </h3>
-      </div>
-    </div>
-  );
-};
+
  
  
 const TimeZoneConverter = () => {
@@ -185,8 +168,7 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
  
-  const date = new Date();
-  const dateToString = date.toString();
+  const { date, time} = useDate();
  
   if (isLoading) {
     return (
@@ -222,7 +204,7 @@ const LocationCardContent = () => {
           <Text color="emphasized" fontWeight="medium">
             Current Time
           </Text>
-          <Text color="muted">{dateToString}</Text>
+          <Text color="muted">{date}{time}</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
@@ -247,7 +229,10 @@ const LocationCardContent = () => {
   );
 };
  
-const LocationCard = () => (
+const LocationCard = () => {
+  const {wish} = useDate();
+
+  return(
   <Container maxW="3xl" py="4">
     <Box
       bg="bg-surface"
@@ -257,6 +242,7 @@ const LocationCard = () => (
     >
       <Stack spacing="5">
         <Stack spacing="1">
+        <Text fontSize="lg" fontWeight="bold">{wish}</Text>
           <Text fontSize="lg" fontWeight="medium">
             Location
           </Text>
@@ -275,7 +261,8 @@ const LocationCard = () => (
     </Box>
   </Container>
 );
- 
+}
+
 type CountdownTimerProps = {
   eventDate: Date;
 };
@@ -335,7 +322,6 @@ const TimeConverter = () => {
     <>
       <CountdownTimer eventDate={target} />
       <LocationCard />
-      <SelectTime />
       <TimeZoneConverter />
     </>
   );
