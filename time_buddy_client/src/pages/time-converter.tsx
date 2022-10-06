@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import {
   Alert,
   AlertIcon,
@@ -64,21 +64,20 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
 
-  let date = new Date().toString();
-  const [currentDate, setCurrentDate] = useState(date);
+  const [currentDate, setCurrentDate] = useState(
+    new Date(Date.now()).toISOString(),
+  );
 
   const updateDate = () => {
-    let date = new Date().toString();
-    setCurrentDate(date);
-  }
+    setCurrentDate(new Date(Date.now()).toISOString());
+  };
 
   setInterval(updateDate, 1000);
-
 
   if (isLoading) {
     return (
       <>
-        <Skeleton h="32px" />
+        <Skeleton h="32px" data-testid="location-test" />
         <SkeletonText mt="2" noOfLines={2} />
         <Skeleton mt="2" h="32px" />
         <SkeletonText mt="2" noOfLines={2} />
@@ -89,18 +88,28 @@ const LocationCardContent = () => {
   }
 
   if (isError) {
-    return <Text>Unexpected Error occurred fetching data...</Text>;
+    return (
+      <Text data-testid="location-test">
+        Unexpected Error occurred fetching data...
+      </Text>
+    );
   }
 
   return (
     <>
-      <Stack justify="start" align="center" direction="row" spacing="4">
+      <Stack
+        justify="start"
+        align="center"
+        direction="row"
+        spacing="4"
+        data-testid="location-test"
+      >
         <Icon as={FiGlobe} boxSize="6" />
         <Stack spacing="0.5" fontSize="sm">
           <Text color="emphasized" fontWeight="medium">
             City
           </Text>
-          <Text color="muted" data-testid="location-test">{locationData.name}</Text>
+          <Text color="muted">{locationData.name}</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
