@@ -17,7 +17,7 @@ class Time_Zone(models.Model):
     
 class User(models.Model):
     user_id = models.UUIDField("user_id",primary_key=True,default=uuid.uuid4,editable=False)
-
+    email =  models.CharField("tz_name", max_length=100)
     class Meta:
         db_table = 'users'
         managed = True
