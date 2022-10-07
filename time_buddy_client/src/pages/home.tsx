@@ -1,17 +1,12 @@
 import {
-  
     Box,
     Container,
- 
-    Text,
-   
+    Text, 
     useColorModeValue,
   
   } from '@chakra-ui/react';
 
-const Home = () => {
-
-    return(
+const Home = () => (
       <Container maxW="5xl" py="4">
       <Box
       bg="#87CEFA"
@@ -31,7 +26,7 @@ const Home = () => {
       </Box>
       </Container>
     );
-}
+
 
 
 
