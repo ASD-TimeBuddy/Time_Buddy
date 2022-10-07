@@ -40,7 +40,7 @@ const Navbar = () => {
                 <Button as={RRLink} to="/">
                   Home
                 </Button>
-                <Button as={RRLink} to="/time-converter">
+                <Button as={RRLink} to="/time-converter" data-testid="time-converter-button">
                   International Time Converter
                 </Button>
                 <Button as={RRLink} to="/calendar">

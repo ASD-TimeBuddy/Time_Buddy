@@ -304,7 +304,7 @@ const CountdownTimer = (props: CountdownTimerProps) => {
   }, [eventDate]);
  
   return isHappening ? (
-    <Alert status="warning">
+    <Alert status="warning" data-testid="countdown-panel">
       <AlertIcon /> Event is happening now!
     </Alert>
   ) : (
