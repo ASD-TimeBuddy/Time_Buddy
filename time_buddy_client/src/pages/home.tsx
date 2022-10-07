@@ -1,19 +1,12 @@
 import {
-    Alert,
-    AlertIcon,
+  
     Box,
     Container,
-    Stack,
-    Icon,
+ 
     Text,
-    Skeleton,
-    SkeletonText,
+   
     useColorModeValue,
-    Input,
-    Select,
-    Grid,
-    GridItem,
-    Checkbox
+  
   } from '@chakra-ui/react';
 
 const Home = () => {
