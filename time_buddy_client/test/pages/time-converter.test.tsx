@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+//import { act } from 'react-dom/test-utils';
 
 import Wrapper from '../wrapper';
 import TimeConverter from '../../src/pages/time-converter';
