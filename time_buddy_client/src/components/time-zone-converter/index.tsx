@@ -8,7 +8,6 @@ import {
   Input,
   Grid,
   GridItem,
-  Checkbox
 } from '@chakra-ui/react';
 import TimezoneSelect from 'react-timezone-select';
 import timeZoneConverter from 'time-zone-converter';
