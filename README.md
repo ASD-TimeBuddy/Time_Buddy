@@ -2,6 +2,33 @@
 
 Timezone sensitive event planning app/api
 
+## Features by person
+
+### James [Leader]
+
+- CRUD Events API
+- Import/Export Events to ics files
+
+### Colin
+
+- Marketing Page
+- International Time Zone Picker
+
+### Christie
+
+- Internal App Logic (e.g. automatically set the local timezone offset, find users location)
+- Event Groups (Seperate events into groups or organisations)
+
+### Tasnim
+
+- Time Zone Conversion Function/Design
+- App Authentication & Authorisation
+
+### Euan
+
+- The Frontend for the Events App
+- Support Page
+
 ## Django Build Instructions
 
 ### Install Required Dependancies
@@ -17,7 +44,7 @@ Timezone sensitive event planning app/api
 2. Start virtual environment `source ./venv/bin/activate` or
    `.\venv\Scripts\activate.bat` on windows.
 
-3. Install dependancies. `pip -r requirements.txt` (only need to do this once)
+3. Install dependancies. `pip install -r requirements.txt` (only need to do this once)
 
 4. Run Django with `python manage.py runserver`
 

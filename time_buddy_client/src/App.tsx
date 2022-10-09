@@ -5,6 +5,7 @@ import Home from './pages/home';
 import TimeConverter from './pages/time-converter';
 import Calendar from './pages/calendar';
 import Support from './pages/support';
+import Login from './pages/login';
 
 import Navbar from './components/navbar';
 
@@ -24,6 +25,7 @@ const App = () => (
       <Route path="time-converter" element={<TimeConverter />} />
       <Route path="calendar" element={<Calendar />} />
       <Route path="support" element={<Support />} />
+      <Route path="login" element={<Login />} />
     </Route>
   </Routes>
 );

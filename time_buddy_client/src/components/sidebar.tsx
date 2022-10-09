@@ -13,6 +13,7 @@ import {
   FiHelpCircle,
   FiHome,
   FiSearch,
+  FiUser,
 } from 'react-icons/fi';
 
 import Logo from './logo';
@@ -46,6 +47,11 @@ const Sidebar = () => (
               icon={FiClock}
             />
             <NavButton to="/calendar" label="Calendar" icon={FiCalendar} />
+            <NavButton
+              to="/login"
+              label="Login"
+              icon={FiUser}
+            />
           </Stack>
         </Stack>
         <Stack spacing={{ base: '5', sm: '6' }}>

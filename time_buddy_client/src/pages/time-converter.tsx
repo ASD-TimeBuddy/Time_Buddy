@@ -10,9 +10,38 @@ import {
   Skeleton,
   SkeletonText,
   useColorModeValue,
+  Input,
+  Select,
+  Grid,
+  GridItem,
+  Checkbox
 } from '@chakra-ui/react';
-import { FiCloud, FiThermometer, FiGlobe } from 'react-icons/fi';
+import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
 import useSWR from 'swr';
+import useDate from '../hooks/useDate';
+import { TimeZoneConverter } from '../components/time-zone-converter';
+
+
+const SelectTime = () => {
+  const { date, time, wish } = useDate();
+
+  return (
+    <div className="greetings-container">
+      <h1>{wish}</h1>
+
+      <div>
+        <h3>
+          {date}
+          <br />
+          {time}
+        </h3>
+      </div>
+    </div>
+  );
+};
+
+
+
 // import dayjs from 'dayjs';
 
 // Always try to split code into as many seperate functions as possible
@@ -44,6 +73,9 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
 
+  const date = new Date();
+  const dateToString = date.toString();
+
   if (isLoading) {
     return (
       <>
@@ -70,6 +102,15 @@ const LocationCardContent = () => {
             City
           </Text>
           <Text color="muted">{locationData.name}</Text>
+        </Stack>
+      </Stack>
+      <Stack justify="start" align="center" direction="row" spacing="4">
+        <Icon as={FiClock} boxSize="6" />
+        <Stack spacing="0.5" fontSize="sm">
+          <Text color="emphasized" fontWeight="medium">
+            Current Time
+          </Text>
+          <Text color="muted">{dateToString}</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
@@ -182,6 +223,8 @@ const TimeConverter = () => {
     <>
       <CountdownTimer eventDate={target} />
       <LocationCard />
+      <SelectTime />
+      <TimeZoneConverter />
     </>
   );
 };
