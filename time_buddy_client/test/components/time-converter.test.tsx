@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { CurrentTimeZoneSelector } from '../../components/time-zone-converter/current-timezone-selector';
+import { CurrentTimeZoneSelector } from '../../src/components/time-zone-converter/current-timezone-selector';
 
 describe('CurrentTimeZoneSelector', () => {
   it('should call handle checkbox when checkbox clicked', () => {

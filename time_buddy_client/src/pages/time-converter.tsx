@@ -10,6 +10,11 @@ import {
   Skeleton,
   SkeletonText,
   useColorModeValue,
+  Input,
+  Select,
+  Grid,
+  GridItem,
+  Checkbox
 } from '@chakra-ui/react';
 import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
 import useSWR from 'swr';
