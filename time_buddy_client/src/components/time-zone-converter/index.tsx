@@ -12,15 +12,14 @@ import {
 import TimezoneSelect from 'react-timezone-select';
 import timeZoneConverter from 'time-zone-converter';
 import { format } from 'date-fns';
-
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { CurrentTimeZoneSelector } from './current-timezone-selector';
 
 export const TimeZoneConverter = () => {
-    const options = [
+    /*const options = [
       'one', 'two', 'three'
-    ];
+    ];*/
   
     const [startDate, setStartDate] = useState(new Date());
     const [convertedDate, setConvertedDate] = useState("");
@@ -125,3 +124,5 @@ export const TimeZoneConverter = () => {
     );
   
   }
+
+  export default TimeZoneConverter;
