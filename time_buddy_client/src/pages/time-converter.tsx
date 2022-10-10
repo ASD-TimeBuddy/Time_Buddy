@@ -124,10 +124,10 @@ const LocationCard = () => {
       borderRadius="lg"
       p={{ base: '4', md: '6' }}
     >
-      <div>
+          <Box>
           <input placeholder="Enter Location Here!"/>
-          <button color="#87CEFA">Search</button>
-      </div>
+          <button color="emphasized">Search</button>
+          </Box>
       <Text fontSize="lg" fontWeight="bold">{time}</Text>
       <Stack spacing="5">
         <Stack spacing="1">
