@@ -28,14 +28,14 @@ if DEBUG:
     load_dotenv()
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY ='b2cwb*x-3c869j+!1f@i8!sqo61(5&7s^wcml&bs^_j-=b^vbg'#os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 ALLOWED_HOSTS = (['127.0.0.1',]) #os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 LOGGING_CONFIG = None
 
 # Get loglevel from env
-LOGLEVEL = 'debug'#os.getenv('DJANGO_LOGLEVEL', 'info').upper()
+LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
 
 logging.config.dictConfig({
     'version': 1,
@@ -53,7 +53,7 @@ logging.config.dictConfig({
     },
     'loggers': {
         '': {
-            #'level': LOGLEVEL,
+            'level': LOGLEVEL,
             'handlers': ['console',],
         },
     },
@@ -126,20 +126,20 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.postgresql',
-    #    'NAME': os.getenv('DATABASE_NAME'),
-    #    'USER': os.getenv('DATABASE_USER'),
-    #    'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-    #    'HOST': os.getenv('DATABASE_HOST'),
-    #    'TEST': {
-    #        'ENGINE': 'django.db.backends.sqlite3',
-    #        'NAME': BASE_DIR / 'db.sqlite3',
-    #    }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3',
+    #}
     
 }
 
