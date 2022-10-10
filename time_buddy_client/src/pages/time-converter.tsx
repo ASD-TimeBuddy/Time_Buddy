@@ -71,6 +71,7 @@ const LocationCardContent = () => {
  
   return (
     <>
+    
       <Stack justify="start" align="center" direction="row" spacing="4">
         <Icon as={FiGlobe} boxSize="6" />
         <Stack spacing="0.5" fontSize="sm">
@@ -113,15 +114,21 @@ const LocationCardContent = () => {
  
 const LocationCard = () => {
   const {wish} = useDate();
-
+  const { date, time} = useDate();
   return(
   <Container maxW="3xl" py="4">
+    
     <Box
       bg="bg-surface"
       boxShadow={useColorModeValue('sm', 'sm-dark')}
       borderRadius="lg"
       p={{ base: '4', md: '6' }}
     >
+      <div>
+          <input placeholder="Enter Location Here!"/>
+          <button color="#87CEFA">Search</button>
+      </div>
+      <Text fontSize="lg" fontWeight="bold">{time}</Text>
       <Stack spacing="5">
         <Stack spacing="1">
         <Text fontSize="lg" fontWeight="bold">{wish}</Text>
@@ -202,6 +209,7 @@ const TimeConverter = () => {
  
   return (
     <>
+      
       <CountdownTimer eventDate={target} />
       <LocationCard />
    
