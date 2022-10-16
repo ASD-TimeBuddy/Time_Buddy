@@ -30,7 +30,7 @@ if DEBUG:
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
+ALLOWED_HOSTS = (['127.0.0.1',]) #os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 LOGGING_CONFIG = None
 
@@ -115,6 +115,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'time_buddy.wsgi.application'
 
+# pagination class attrubutes none by default, also accesible through pagination_class view attribute
+# https://www.django-rest-framework.org/api-guide/pagination/#setting-the-pagination-style
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE':100
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -126,7 +132,15 @@ DATABASES = {
         'USER': os.getenv('DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': os.getenv('DATABASE_HOST'),
-    }
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3',
+    #}
+    
 }
 
 # Static files (CSS, JavaScript, Images)
