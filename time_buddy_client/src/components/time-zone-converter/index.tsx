@@ -8,7 +8,6 @@ import {
   Input,
   Grid,
   GridItem,
-  Checkbox
 } from '@chakra-ui/react';
 import TimezoneSelect from 'react-timezone-select';
 import timeZoneConverter from 'time-zone-converter';
@@ -19,9 +18,9 @@ import DatePicker from "react-datepicker";
 import { CurrentTimeZoneSelector } from './current-timezone-selector';
 
 export const TimeZoneConverter = () => {
-    const options = [
+    /*const options = [
       'one', 'two', 'three'
-    ];
+    ];*/
   
     const [startDate, setStartDate] = useState(new Date());
     const [convertedDate, setConvertedDate] = useState("");
@@ -126,3 +125,5 @@ export const TimeZoneConverter = () => {
     );
   
   }
+
+  export default TimeZoneConverter;
