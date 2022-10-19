@@ -12,7 +12,6 @@ import {
 import TimezoneSelect from 'react-timezone-select';
 import timeZoneConverter from 'time-zone-converter';
 import { format } from 'date-fns';
-
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { CurrentTimeZoneSelector } from './current-timezone-selector';
