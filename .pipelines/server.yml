@@ -66,31 +66,31 @@ stages:
               pathToPublish: ./app-spec.yml
               ArtifactName: app-spec.yml
 
-- stage: ServerCD
-  displayName: 'Deploy Client to Cloudflare'
-  dependsOn: ServerCI
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-  jobs:
-  - deployment: DeployServer
+  - stage: ServerCD
+    displayName: 'Deploy Client to Cloudflare'
+    dependsOn: ServerCI
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - deployment: DeployServer
     
-    pool:
-      vmImage: ubuntu-latest
+        pool:
+          vmImage: ubuntu-latest
     
-    environment: Server
+        environment: Server
 
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - download: current
-            artifact: app-spec.yml
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: app-spec.yml
           
-          - displayName: "Install Doctl CLI tool"
-            script: |
-              curl -OL https://github.com/digitalocean/doctl/releases/download/v1.84.0/doctl-1.84.0-linux-amd64.tar.gz
-              tar -xvf doctl-1.84.0-linux-amd64.tar.gz
-              mv ./doctl /usr/local/bin
+                - script: |
+                    curl -OL https://github.com/digitalocean/doctl/releases/download/v1.84.0/doctl-1.84.0-linux-amd64.tar.gz
+                    tar -xvf doctl-1.84.0-linux-amd64.tar.gz
+                    mv ./doctl /usr/local/bin
+                  displayName: 'Install Doctl CLI tool'
 
-          - displayName: Deploy App
-            script: doctl apps update $(appID) --spec app-spec.yml -t $(apiToken)
+                - script: doctl apps update $(appID) --spec app-spec.yml -t $(apiToken)
+                  displayName: 'Deploy App'
 
