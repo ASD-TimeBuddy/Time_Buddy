@@ -2,6 +2,9 @@ name: time-buddy-app
 region: sgp
 services:
 - envs:
+  - key: DJANGO_DEBUG
+    scope: RUN_AND_BUILD_TIME
+    value: false
   - key: DJANGO_LOGLEVEL
     scope: RUN_AND_BUILD_TIME
     value: error
