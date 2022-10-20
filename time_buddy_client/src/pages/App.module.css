@@ -1,0 +1,52 @@
+.App {
+  border: 1px solid #aaa;
+  margin: 20px;
+  width: 500px;
+  padding: 10px;
+  font-family: Arial;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+}
+
+li {
+  display: block;
+}
+
+.listItem {
+  display: flex;
+}
+
+.location {
+  flex: 1;
+}
+
+.timeZone {
+  display: inline-block;
+  color: #888;
+  border-radius: 3px;
+  border: 1px solid #f2f2f2;
+  background: #f3f3f3;
+  padding: 2px 2px 1px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.city,
+.time {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.country,
+.date {
+  font-size: 11px;
+  color: #888;
+}
+
+.dateTime {
+  width: 100px;
+}

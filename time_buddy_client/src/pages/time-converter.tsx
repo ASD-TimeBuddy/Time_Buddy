@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import {
   Alert,
   AlertIcon,
@@ -15,7 +15,10 @@ import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
 import useSWR from 'swr';
 import "react-datepicker/dist/react-datepicker.css";
 import useDate from '../hooks/useDate';
-
+import Select from 'react-select';
+import { useTimezones } from '../components/useTimezones';
+import { cities } from '../data/constants';
+import styles from './App.module.css';
  
 
  
@@ -25,6 +28,59 @@ import useDate from '../hooks/useDate';
  
 // use this to fetch the location information from the website
 // use useSWR for all data fetching
+
+
+function SerchTime () {
+  const [selectedOption, setSelectedOption] = useState(null);
+  const { setCity, cityTimezoneList } = useTimezones();
+  const handleChange = (option) => {
+    setSelectedOption(option);
+    setCity(option.value);
+  }
+  return (
+    <Container maxW="3xl" py="4">
+       <Box
+      bg="bg-surface"
+      boxShadow={useColorModeValue('sm', 'sm-dark')}
+      borderRadius="lg"
+      p={{ base: '4', md: '6' }}
+    >
+    <Stack justify="start" align="center" direction="row" spacing="4">
+        <Icon as={FiGlobe} boxSize="6" />
+        <Stack spacing="0.5" fontSize="sm">
+    <div className={styles.App}>
+      <Select
+        placeholder="Search a city"
+        defaultValue={selectedOption}
+        onChange={handleChange}
+        options={cities}
+      />
+      <ul>
+        {
+          cityTimezoneList.map((item, index) => {
+            return <li key={index}>
+              <div className={styles.listItem}>
+                <div className={styles.location}>
+                  <div className={styles.city}>{item.city} <span className={styles.timeZone}>{item.timeZone}</span></div>
+                  <div className={styles.country}>{item.country}</div>
+                </div>
+                <div className={styles.dateTime}>
+                  <div className={styles.time}>{item.time}</div>
+                  <div className={styles.date}>{item.date}</div>
+                </div>
+              </div>
+            </li>
+          })
+        }
+      </ul>
+    </div>
+    </Stack>
+      </Stack>
+      </Box>
+      </Container>
+  );
+}
+
 const useFetchLocation = () => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -124,10 +180,6 @@ const LocationCard = () => {
       borderRadius="lg"
       p={{ base: '4', md: '6' }}
     >
-          <Box>
-          <input placeholder="Enter Location Here!"/>
-          <button color="emphasized">Search</button>
-          </Box>
       <Text fontSize="lg" fontWeight="bold">{time}</Text>
       <Stack spacing="5">
         <Stack spacing="1">
@@ -211,8 +263,9 @@ const TimeConverter = () => {
     <>
       
       <CountdownTimer eventDate={target} />
+      <SerchTime/>
       <LocationCard />
-   
+      
     </>
   );
 };
