@@ -91,6 +91,8 @@ stages:
                     mv ./doctl /usr/local/bin
                   displayName: 'Install Doctl CLI tool'
 
-                - script: doctl apps update $(appID) --spec app-spec.yml -t $(apiToken)
+                - script: doctl apps update $APPID --spec app-spec.yml -t $TOKEN
                   displayName: 'Deploy App'
+                  env:
+                    TOKEN: $(apiToken)
 
