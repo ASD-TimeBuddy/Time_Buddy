@@ -32,7 +32,7 @@ stages:
 
           - script: |
               pushd '$(projectRoot)'
-              DJANGO_DEBUG=true python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
+              python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
             displayName: "Run tests"
   
       - job: Build
