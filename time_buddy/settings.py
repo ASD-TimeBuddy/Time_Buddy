@@ -63,6 +63,7 @@ logging.config.dictConfig({
 
 INSTALLED_APPS = [
     'time_buddy_events.apps.TimeBuddyEventsConfig',
+    'time_buddy_groups.apps.TimeBuddyOrganisationConfig',
     'time_buddy_support.apps.TimeBuddySupportConfig',
     'django.contrib.admin',
     'django.contrib.auth',
