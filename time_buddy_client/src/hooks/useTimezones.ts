@@ -11,10 +11,13 @@ function useTimezones() {
       getTimezoneByCity(city)
     }
   }, [city]);
-  
   useEffect(() => {
+    const myTimeout = setTimeout(timeSet, 500);
+    function timeSet() {
     getTimezoneByCity('Beijing,China');
     getTimezoneByCity('New York,America');
+  }
+
   }, []);
   // update time every second;
   useEffect(() => {

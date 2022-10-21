@@ -50,6 +50,7 @@ export const cities = [
   { value: 'Kabul,Asia', label: 'Kabul,Asia' },
   { value: 'Yekaterinburg,Asia', label: 'Yekaterinburg,Asia' },
   { value: 'Karachi,Asia', label: 'Karachi,Asia' },
+  { value: 'Beijing,China', label: 'Beijing,China' },
   { value: 'Kolkata,Asia', label: 'Kolkata,Asia' },
   { value: 'Kathmandu,Asia', label: 'Kathmandu,Asia' },
   { value: 'Dhaka,Asia', label: 'Dhaka,Asia' },
