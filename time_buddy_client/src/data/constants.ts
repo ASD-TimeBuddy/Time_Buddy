@@ -1,6 +1,7 @@
 
 export const cities = [
-  { value: 'Pacific,Midway', label: 'Midway Island, Samoa' },
+  { value: 'New York,America', label: 'New York,America' },
+  { value: 'Samoa,Pacific', label: 'Midway Island, Samoa' },
   { value: 'Boise,America', label: 'Boise,America' },
   { value: 'Dawson,America', label: 'Dawson,America' },
   { value: 'Chihuahua,America', label: 'Chihuahua,America' },

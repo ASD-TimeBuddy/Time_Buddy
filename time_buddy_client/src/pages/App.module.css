@@ -18,6 +18,7 @@ li {
 
 .listItem {
   display: flex;
+  align-items: center;
 }
 
 .location {
@@ -49,4 +50,8 @@ li {
 
 .dateTime {
   width: 100px;
+}
+
+.operation {
+  width: 80px;
 }
