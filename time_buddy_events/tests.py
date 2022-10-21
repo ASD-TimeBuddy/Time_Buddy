@@ -139,7 +139,7 @@ class Test_GET_API_Events(TestCase):
     
 
 class Test_POST_API_Events(TestCase):
-    """ Test module for GET single event API """
+    """ Test module for POST valid and invalid events API """
     path = r"./time_buddy_events/test_objs/event.json"
     assert os.path.exists(path)
     json_file = open(path, "r")
@@ -158,11 +158,109 @@ class Test_POST_API_Events(TestCase):
         #force setup
         self.set_up()
 
+        #get response from posting valid payload
         response = client.post(
             reverse('get_post_events'),
             data=json.dumps(self.valid_payload),
             content_type='application/json'
         )
+        # test that creation succeeds 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        
+    def test_create_invalid_event(self):
+        #force setup
+        self.set_up()
+        
+        #get response from posting invalid payload
+        response = client.post(
+            reverse('get_post_events'),
+            data=json.dumps(self.invalid_payload),
+            content_type='application/json'
+        )
+        # test that creation fails
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        
+        
+class Test_PUT_API_Events(TestCase):
+    """ Test module for updating an existing event record"""
+    path = r"./time_buddy_events/test_objs/event.json"
+    assert os.path.exists(path)
+    json_file = open(path, "r")
+    obj =json.load(json_file)
+
+    def set_up(self):
+        self.tz = Time_Zone(tz_name="AEST").save()
+        self.asd_tutorial = Event.objects.create(summary='ASD Tutoral', location='UTS b02', description="this is NOT a test description")
+        self.id_tutorial = Event.objects.create(summary='Interaction Design Tutorial', location='UTS b11', description="UTS b11")
+        self.valid_payload = self.obj
+        self.invalid_payload = {
+            'summary':'',
+            'location':'something else I guess?',
+            'description':''
+        }
     
-    #def test_create_invalid_event(self):
+    def test_valid_update_event(self):
+        #force setup
+        self.set_up()
+        
+        #get response from putting valid payload
+        response= client.put(
+            reverse('get_delete_update_event', kwargs={'pk':self.asd_tutorial.pk}),
+            data=json.dumps(self.valid_payload),
+            content_type='application/json'
+        )
+        # test that update succeeds 
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        
+    def test_invalid_update_event(self):
+        #force setup
+        self.set_up()
+        
+        #get response from putting invalid payload
+        response= client.put(
+            reverse('get_delete_update_event', kwargs={'pk':self.id_tutorial.pk}),
+            data=json.dumps(self.invalid_payload),
+            content_type='application/json'
+        )
+        # test that update fails 
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        
+class Test_DELETE_API_Events(TestCase):
+    """ Test module for updating an existing event record"""
+    #path = r"./time_buddy_events/test_objs/event.json"
+    #assert os.path.exists(path)
+    #json_file = open(path, "r")
+    #obj =json.load(json_file)
+
+    def set_up(self):
+        self.tz = Time_Zone(tz_name="AEST").save()
+        self.asd_tutorial = Event.objects.create(summary='ASD Tutoral', location='UTS b02', description="this is NOT a test description")
+        self.id_tutorial = Event.objects.create(summary='Interaction Design Tutorial', location='UTS b11', description="UTS b11")
+        #self.valid_payload = self.obj
+        #self.invalid_payload = {
+        #    'summary':'',
+        #    'location':'something else I guess?',
+        #    'description':''
+        #}
+    
+    def test_valid_update_event(self):
+        #force setup
+        self.set_up()
+        
+        #get response from putting valid payload
+        response= client.delete(
+            reverse('get_delete_update_event', kwargs={'pk':self.asd_tutorial.pk})
+        )
+        # test that update succeeds 
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        
+    def test_invalid_update_event(self):
+        #force setup
+        self.set_up()
+        
+        #get response from putting invalid payload
+        response= client.put(
+            reverse('get_delete_update_event', kwargs={'pk': 30})
+        )
+        # test that update fails 
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

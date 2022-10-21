@@ -31,11 +31,19 @@ def get_delete_update_event(request, pk):
     if request.method == 'GET':
         serializer = Event_Serializer(event)
         return Response(serializer.data)
+    
+    # update a single event
+    elif request.method == 'PUT':
+        serializer = Event_Serializer(event, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
     # delete a single event
     elif request.method == 'DELETE':
-        return Response({})
-    elif request.method == 'PUT':
-        return Response({})
+        event.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET', 'POST'])
 def get_post_events(request):
