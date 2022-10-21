@@ -43,53 +43,52 @@ function SerchTime() {
     cityList.splice(index, 1);
     setCityTimeZoneList(cityList);
   }
-  return (
-    <Container maxW="3xl" py="4">
-      <Box
-        bg="bg-surface"
-        boxShadow={useColorModeValue('sm', 'sm-dark')}
-        borderRadius="lg"
-        p={{ base: '4', md: '6' }}
-      >
-        <Stack justify="start" align="center" direction="row" spacing="4">
-          <Icon as={FiGlobe} boxSize="6" />
-          <Stack spacing="0.5" fontSize="sm">
-            <div className={styles.App}>
-              <Select
-                placeholder="Search a city"
-                defaultValue={selectedOption}
-                onChange={handleChange}
-                options={cities}
-              />
-              <br/>
-              <ul>
+    return (
+      <Container maxW="3xl" py="4">
+        <Box
+          bg="bg-surface"
+          boxShadow={useColorModeValue('sm', 'sm-dark')}
+          borderRadius="lg"
+          p={{ base: '4', md: '6' }}
+        >
+          <Stack justify="start" align="center" direction="row" spacing="4">
+            <Icon as={FiGlobe} boxSize="6" />
+            <Stack spacing="0.5" fontSize="sm">
+              <div className={styles.App}>
+                <Select
+                  placeholder="Search a city"
+                  defaultValue={selectedOption}
+                  onChange={handleChange}
+                  options={cities}
+                />
+                <br/>       
+                <ul>
                 {
-                  cityTimezoneList.map((item, index) => <li key={index}>
-                    <div className={styles.listItem}>
-                      <div className={styles.location}>
-                        <div className={styles.city}>{item.city} <span className={styles.timeZone}>{item.timeZone}</span></div>
-                        <div className={styles.country}>{item.country}</div>
+                    cityTimezoneList.map((item, index) => <li key={index}>
+                      <div className={styles.listItem}>
+                        <div className={styles.location}>
+                          <div className={styles.city}>{item.city} <span className={styles.timeZone}>{item.timeZone}</span></div>
+                          <div className={styles.country}>{item.country}</div>
+                        </div>
+                        <div className={styles.dateTime}>
+                          <div className={styles.time}>{item.time}</div>
+                          <div className={styles.date}>{item.date}</div>
+                        </div>
+                        <div className={styles.operation}>
+                          <Button
+                            onClick={() => remove(index)}
+                            size="xs">Remove</Button>
+                        </div>
                       </div>
-                      <div className={styles.dateTime}>
-                        <div className={styles.time}>{item.time}</div>
-                        <div className={styles.date}>{item.date}</div>
-                      </div>
-                      <div className={styles.operation}>
-                        <Button
-                          onClick={() => remove(index)}
-                          size="xs">Remove</Button>
-                      </div>
-                    </div>
-                  </li>)
-                }
-              </ul>
-            </div>
+                    </li>)
+                  }
+                </ul>
+              </div>
+            </Stack>
           </Stack>
-        </Stack>
-      </Box>
-    </Container>
-  );
-}
+        </Box>
+      </Container>
+    );}
 
 const useFetchLocation = () => {
   const [latitude, setLatitude] = useState(0);
