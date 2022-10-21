@@ -1,8 +1,8 @@
-from django.db.models import fields
 from rest_framework import serializers
-from .models import Group
 
-class Group_Serializer(serializers.ModelSerializer):
+from .models import Organisation
+
+class OrganisationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Group
-        fields = ('group_id','description')
+        model = Organisation
+        fields = ('organisation_id', 'group_name', 'group_password')

@@ -1,9 +1,12 @@
-from django.urls import path
-from . import views
+from django.urls import include, path
+from rest_framework import routers
+from .views import OrganisationViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'organisation', OrganisationViewSet)
 
 urlpatterns = [
-    path('', views.api_overview, name='home'),
-    path('create/', views.add_groups, name='add-groups'),
-    path('all/', views.view_groups, name='view_groups'),
-    path('event/<uuid:pk>/delete',views.delete_groups, name='delete-groups'),
+    path('', include(router.urls)),
+    path('auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
