@@ -10,7 +10,6 @@
     "test": "set NODE_ENV=test && jest --coverage"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^1.12.0",
     "@chakra-ui/icons": "^2.0.8",
     "@chakra-ui/pro-theme": "^0.0.53",
     "@chakra-ui/react": "^2.2.8",
@@ -18,9 +17,6 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@fontsource/inter": "^4.5.12",
-    "@fortawesome/fontawesome-svg-core": "^6.2.0",
-    "@fortawesome/free-solid-svg-icons": "^6.2.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@supabase/supabase-js": "^1.35.6",
     "@types/react-datepicker": "^4.4.2",
     "date-fns": "^2.29.3",

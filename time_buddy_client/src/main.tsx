@@ -1,19 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import { BrowserRouter } from 'react-router-dom';
 import { ColorModeScript, ChakraProvider } from '@chakra-ui/react';
 import { SWRConfig } from 'swr';
+
 import type { Fetcher, SWRConfiguration } from 'swr';
 
-import { Auth0Provider } from '@auth0/auth0-react';
-
 import theme from './theme';
+
 import App from './App';
-
-
-
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 class ApiError extends Error {
   info?: any;
@@ -44,11 +40,6 @@ const swrConfig: SWRConfiguration = { fetcher };
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Auth0Provider
-    domain={domain}
-    client_id={clientId}
-    redirectUri={window.location.origin}
-    >
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <BrowserRouter>
       <ChakraProvider theme={theme}>
@@ -57,6 +48,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         </SWRConfig>
       </ChakraProvider>
     </BrowserRouter>
-    </Auth0Provider>
   </React.StrictMode>,
 );

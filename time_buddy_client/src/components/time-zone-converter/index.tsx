@@ -12,14 +12,15 @@ import {
 import TimezoneSelect from 'react-timezone-select';
 import timeZoneConverter from 'time-zone-converter';
 import { format } from 'date-fns';
+
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { CurrentTimeZoneSelector } from './current-timezone-selector';
 
 export const TimeZoneConverter = () => {
-    /* const options = [
+    /*const options = [
       'one', 'two', 'three'
-    ]; */
+    ];*/
   
     const [startDate, setStartDate] = useState(new Date());
     const [convertedDate, setConvertedDate] = useState("");
@@ -59,7 +60,6 @@ export const TimeZoneConverter = () => {
       }
     }
   
-    // lintin rule work around : https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook
     useEffect(()=>{
       convertTimezoneValues();
     },[selectedSourceTimezone,selectedDestTimezone,currentSelected]);
@@ -102,7 +102,7 @@ export const TimeZoneConverter = () => {
         
           <GridItem colSpan={5}>
               <CurrentTimeZoneSelector currentSelected={currentSelected} onChange={handleCheckboxSelect}/>
-              <Text>Use current timezone and date/time: <b>{`${timeZone}    ${(format(new Date(), "MMM dd, yyyy h:mm aa"))}`}</b></Text>
+              <Text>Use current timezone and date/time: <b>{timeZone +"    "+(format(new Date(), "MMM dd, yyyy h:mm aa"))}</b></Text>
               <br/>
           </GridItem>
           <GridItem colSpan={1}>
@@ -116,8 +116,7 @@ export const TimeZoneConverter = () => {
             />
           </GridItem>
           <GridItem colSpan={2} >
-              {/* props boolean Defaut to True https://reactjs.org/docs/jsx-in-depth.html#boolean-attributes */}
-              <Input disabled placeholder="" variant="outline" borderColor="#3182ce" colorScheme="white" value={convertedDate}/>
+              <Input disabled={true} placeholder="" variant="outline" borderColor="#3182ce" colorScheme="white" value={convertedDate}/>
           </GridItem>
         </Grid>
       </Box>
