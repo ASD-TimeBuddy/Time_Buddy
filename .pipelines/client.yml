@@ -34,6 +34,11 @@ stages:
 
     - script: yarn test
       workingDirectory: $(working-dir)
+    
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: $(working-dir)/coverage
+        ArtifactName: test-report
   
   - job: Build
     dependsOn: Test

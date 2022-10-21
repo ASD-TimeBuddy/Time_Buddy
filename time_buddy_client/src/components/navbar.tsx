@@ -41,6 +41,9 @@ const Navbar = () => {
                   Home
                 </Button>
                 <Button as={RRLink} to="/time-converter">
+                  Event Groups
+                </Button>
+                <Button as={RRLink} to="/time-converter">
                   International Time Converter
                 </Button>
                 <Button as={RRLink} to="/calendar">

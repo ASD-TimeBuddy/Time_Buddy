@@ -73,13 +73,27 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
 
+<<<<<<< HEAD
   const date = new Date();
   const dateToString = date.toString();
+=======
+
+  const [currentDate, setCurrentDate] = useState(
+    new Date(Date.now()).toISOString(),
+  );
+
+  const updateDate = () => {
+    setCurrentDate(new Date(Date.now()).toISOString());
+  };
+
+  setInterval(updateDate, 1000);
+
+>>>>>>> dbb27770b08315549a7aa3611fdc20f4ca4e2dee
 
   if (isLoading) {
     return (
       <>
-        <Skeleton h="32px" />
+        <Skeleton h="32px" data-testid="location-test" />
         <SkeletonText mt="2" noOfLines={2} />
         <Skeleton mt="2" h="32px" />
         <SkeletonText mt="2" noOfLines={2} />
@@ -90,12 +104,22 @@ const LocationCardContent = () => {
   }
 
   if (isError) {
-    return <Text>Unexpected Error occurred fetching data...</Text>;
+    return (
+      <Text data-testid="location-test">
+        Unexpected Error occurred fetching data...
+      </Text>
+    );
   }
 
   return (
     <>
-      <Stack justify="start" align="center" direction="row" spacing="4">
+      <Stack
+        justify="start"
+        align="center"
+        direction="row"
+        spacing="4"
+        data-testid="location-test"
+      >
         <Icon as={FiGlobe} boxSize="6" />
         <Stack spacing="0.5" fontSize="sm">
           <Text color="emphasized" fontWeight="medium">
@@ -110,7 +134,7 @@ const LocationCardContent = () => {
           <Text color="emphasized" fontWeight="medium">
             Current Time
           </Text>
-          <Text color="muted">{dateToString}</Text>
+          <Text color="muted">{currentDate}</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
@@ -119,7 +143,7 @@ const LocationCardContent = () => {
           <Text color="emphasized" fontWeight="medium">
             Temperature
           </Text>
-          <Text color="muted">{locationData.main.temp}</Text>
+          <Text color="muted">{locationData.main.temp}°C</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
@@ -209,7 +233,7 @@ const CountdownTimer = (props: CountdownTimerProps) => {
       <AlertIcon /> Event is happening now!
     </Alert>
   ) : (
-    <Alert status="info">
+    <Alert status="info" data-testid="countdown-test">
       <AlertIcon />
       {`Time till event: ${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`}
     </Alert>
@@ -228,5 +252,10 @@ const TimeConverter = () => {
     </>
   );
 };
+<<<<<<< HEAD
 
 export default TimeConverter;
+=======
+ 
+export default TimeConverter;
+>>>>>>> dbb27770b08315549a7aa3611fdc20f4ca4e2dee
