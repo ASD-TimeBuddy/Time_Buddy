@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 
 # Create your models here. 
+# to be moved to another (USER) app
 class Time_Zone(models.Model):
     tz_id = models.IntegerField("tz_id",primary_key=True,unique=True,default=1)
     tz_name = models.CharField("tz_name", max_length=50)
@@ -14,7 +15,7 @@ class Time_Zone(models.Model):
 
     def __str__(self):
         return self.tz_id
-    
+# to be moved to another (USER) app
 class User(models.Model):
     user_id = models.UUIDField("user_id",primary_key=True,default=uuid.uuid4,editable=False)
     email =  models.CharField("tz_name", max_length=100)

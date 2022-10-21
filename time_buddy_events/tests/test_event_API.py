@@ -260,7 +260,7 @@ class Test_DELETE_API_Events(TestCase):
         
         #get response from putting invalid payload
         response= client.put(
-            reverse('get_delete_update_event', kwargs={'pk': 30})
+            reverse('get_delete_update_event', kwargs={'pk':'0cbc2b45-8067-44e5-ba48-b9b10c72f206'})
         )
         # test that update fails 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
