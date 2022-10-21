@@ -48,10 +48,12 @@ stages:
         versionSpec: '16.x'
       displayName: 'Install Node.js'
 
-    - script: yarn install
+    - displayName: 'Install Yarn'
+      script: yarn install
       workingDirectory: $(working-dir)
 
-    - script: yarn build
+    - displayName: 'Build Project'
+      script: yarn build
       workingDirectory: $(working-dir)
   
     - task: PublishBuildArtifacts@1

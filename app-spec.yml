@@ -1,0 +1,54 @@
+name: time-buddy-app
+region: sgp
+services:
+- envs:
+  - key: DJANGO_DEBUG
+    scope: RUN_AND_BUILD_TIME
+    value: false
+  - key: DJANGO_LOGLEVEL
+    scope: RUN_AND_BUILD_TIME
+    value: error
+  - key: DJANGO_SECRET_KEY
+    scope: RUN_AND_BUILD_TIME
+    type: SECRET
+    value: EV[1:GvVFrRv6WyJeQNP11ujEq7ZnLfs3DheZ:qy9LbloObX6gRmPAd6Ehp+OZMMQ/wXUgpPbwadMfXYw+Y0IMrXwUGj7c559lqj6FfxKzsk4y]
+  - key: DATABASE_NAME
+    scope: RUN_AND_BUILD_TIME
+    value: timebuddydb
+  - key: DATABASE_USER
+    scope: RUN_AND_BUILD_TIME
+    value: timebuddyuser
+  - key: DATABASE_PASSWORD
+    scope: RUN_AND_BUILD_TIME
+    type: SECRET
+    value: EV[1:s6kOuLpvKuJAeGbiKVtyQCMhKa980QsN:bl51ZgX55wUIpS1SObvD2FXEm55WK8C0W2aqybNQ8zz7/w==]
+  - key: DATABASE_HOST
+    scope: RUN_AND_BUILD_TIME
+    value: 128.199.225.191
+  - key: STATIC_ACCESS_KEY_ID
+    scope: RUN_AND_BUILD_TIME
+    value: DO00AG4TP9N4FLXQ2HED
+  - key: STATIC_SECRET_KEY
+    scope: RUN_AND_BUILD_TIME
+    type: SECRET
+    value: EV[1:6JDSr0U3sV7qjSyb8JfxbzrK7sheW/xX:Cw1KTwCZ/+x0LjhHe1lzlRyPpyNeOTT3A8Dn1haxxJ03ZtX81tJHvB8XeBF7Ue5x+EeEjtoVOX9xMZ0=]
+  - key: STATIC_BUCKET_NAME
+    scope: RUN_AND_BUILD_TIME
+    value: time-buddy-static
+  - key: STATIC_ENDPOINT_URL
+    scope: RUN_AND_BUILD_TIME
+    value: https://sgp1.digitaloceanspaces.com
+  - key: DJANGO_ALLOWED_HOSTS
+    scope: RUN_AND_BUILD_TIME
+    value: time-buddy-app-zqdu8.ondigitalocean.app
+  http_port: 8000
+  image:
+    registry: bebopbamf
+    registry_type: DOCKER_HUB
+    repository: time-buddy
+    tag: latest
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: time-buddy-api
+  routes:
+  - path: /
