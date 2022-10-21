@@ -3,8 +3,8 @@ import os
 from rest_framework import status
 from django.test import TestCase, Client
 from django.urls import reverse
-from .models import Event, Time_Zone
-from .serializers import Event_Serializer
+from ..models import Event, Time_Zone
+from ..serializers import Event_Serializer
 
 
 # initialize the APIClient app
