@@ -73,10 +73,6 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
 
-<<<<<<< HEAD
-  const date = new Date();
-  const dateToString = date.toString();
-=======
 
   const [currentDate, setCurrentDate] = useState(
     new Date(Date.now()).toISOString(),
@@ -88,7 +84,6 @@ const LocationCardContent = () => {
 
   setInterval(updateDate, 1000);
 
->>>>>>> dbb27770b08315549a7aa3611fdc20f4ca4e2dee
 
   if (isLoading) {
     return (
@@ -252,10 +247,5 @@ const TimeConverter = () => {
     </>
   );
 };
-<<<<<<< HEAD
-
-export default TimeConverter;
-=======
  
 export default TimeConverter;
->>>>>>> dbb27770b08315549a7aa3611fdc20f4ca4e2dee
