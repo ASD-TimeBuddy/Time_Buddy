@@ -1,5 +1,44 @@
-import { Text } from '@chakra-ui/react';
+import { Link as RRLink } from 'react-router-dom';
+import {
 
-const Organisation = () => <Text>Add Organsation page here...</Text>;
+  Box,
+  Button,
+  Container,
+  Stack,
+  FormControl,
+  Input,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
+
+
+const Organisation = () => (
+    <Container maxW="3xl" py="4">
+      <Box
+        bg="bg-surface"
+        boxShadow={useColorModeValue('sm', 'sm-dark')}
+        borderRadius="lg"
+        p={{ base: '4', md: '6' }}
+      >
+        <Stack spacing="5">
+          <Stack spacing="3">
+            <Text fontSize="lg" fontWeight="medium">
+              Organisation
+            </Text>
+            <Text fontSize="sm" color="muted">
+              Join an organisation.
+            </Text>
+            <FormControl isRequired>
+                <Input type='text' fontSize="sm" color="muted" placeholder='Enter a unique 6 digit ID' />
+            </FormControl>
+            <Button bg="bg-accent" color="on-accent" size='sm' width='100px' as={RRLink} to="/eventgroups">
+                Join
+            </Button>
+          </Stack>
+   
+        </Stack>
+      </Box>
+    </Container>
+  );
 
 export default Organisation;
