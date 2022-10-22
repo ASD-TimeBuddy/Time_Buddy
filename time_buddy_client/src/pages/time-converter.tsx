@@ -16,16 +16,12 @@ import useSWR from 'swr';
 import dayjs from 'dayjs';
 
 import useDate from '../hooks/useDate';
-import TimeZoneConverter from '../components/time-converter/time-zone-converter';
-
 
 const SelectTime = () => {
   const { date, time, wish } = useDate();
-
   return (
     <div className="greetings-container">
       <h1>{wish}</h1>
-
       <div>
         <h3>
           {date}
@@ -36,9 +32,6 @@ const SelectTime = () => {
     </div>
   );
 };
-
-
-
 // import dayjs from 'dayjs';
 
 // Always try to split code into as many seperate functions as possible
@@ -51,14 +44,12 @@ const useFetchLocation = () => {
   const { data, error } = useSWR(
     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=aab18fa42aadc68ffbaecb30509333fe&units=metric`,
   );
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
     });
   }, [latitude, longitude, data]);
-
   return {
     locationData: data,
     isLoading: !error && !data,
@@ -70,22 +61,21 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
 
+  const dateToString = new Date();
 
-  const [currentDate, setCurrentDate] = useState(
-    new Date(Date.now()).toISOString(),
-  );
+
+  let date = new Date().toString();
+  const [currentDate, setCurrentDate] = useState(date);
 
   const updateDate = () => {
-    setCurrentDate(new Date(Date.now()).toISOString());
-  };
-
+    let date = new Date().toString();
+    setCurrentDate(date);
+  }
   setInterval(updateDate, 1000);
-
-
   if (isLoading) {
     return (
       <>
-        <Skeleton h="32px" data-testid="location-test" />
+        <Skeleton h="32px" />
         <SkeletonText mt="2" noOfLines={2} />
         <Skeleton mt="2" h="32px" />
         <SkeletonText mt="2" noOfLines={2} />
@@ -117,7 +107,7 @@ const LocationCardContent = () => {
           <Text color="emphasized" fontWeight="medium">
             City
           </Text>
-          <Text color="muted">{locationData.name}</Text>
+          <Text color="muted" data-testid="location-test">{locationData.name}</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
@@ -183,10 +173,8 @@ const LocationCard = () => (
 type CountdownTimerProps = {
   eventDate: Date;
 };
-
 const CountdownTimer = (props: CountdownTimerProps) => {
   const { eventDate } = props;
-
   const [isHappening, setIsHappening] = useState(false);
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -197,26 +185,20 @@ const CountdownTimer = (props: CountdownTimerProps) => {
     const interval = setInterval(() => {
       const now = new Date();
       const difference = eventDate.getTime() - now.getTime();
-
       const d = Math.floor(difference / (1000 * 60 * 60 * 24));
       setDays(d);
-
       const h = Math.floor(
         (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       );
       setHours(h);
-
       const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       setMinutes(m);
-
       const s = Math.floor((difference % (1000 * 60)) / 1000);
       setSeconds(s);
-
       if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
         setIsHappening(true);
       }
     }, 1000);
-
     return () => clearInterval(interval);
   }, [eventDate]);
 
@@ -231,16 +213,13 @@ const CountdownTimer = (props: CountdownTimerProps) => {
     </Alert>
   );
 };
-
 const TimeConverter = () => {
   const target = new Date('11/28/2022 13:48:59');
-
   return (
     <>
       <CountdownTimer eventDate={target} />
       <LocationCard />
       <SelectTime />
-      <TimeZoneConverter time={dayjs(Date.now())} />
     </>
   );
 };

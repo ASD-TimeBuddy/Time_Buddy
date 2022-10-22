@@ -5,9 +5,9 @@ import Home from './pages/home';
 import TimeConverter from './pages/time-converter';
 import Calendar from './pages/calendar';
 import Support from './pages/support';
-// import Register from './pages/register';
+import EventGroup from './pages/eventgroups';
 import Navbar from './components/navbar';
-import LoginButton from './pages/auth';
+import Organisation from './pages/organisation';
 
 const Layout = () => (
   <Box height="100vh" overflowY="auto">
@@ -22,6 +22,8 @@ const App = () => (
   <Routes>
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
+      <Route path="organisation" element={<Organisation />} />
+      <Route path="eventgroups" element={<EventGroup />} />
       <Route path="time-converter" element={<TimeConverter />} />
       <Route path="calendar" element={<Calendar />} />
       <Route path="support" element={<Support />} />

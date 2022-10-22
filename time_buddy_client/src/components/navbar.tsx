@@ -40,7 +40,10 @@ const Navbar = () => {
                 <Button as={RRLink} to="/">
                   Home
                 </Button>
-                <Button as={RRLink} to="/time-converter">
+                <Button as={RRLink} to="/organisation">
+                  Organisation
+                </Button>
+                <Button as={RRLink} to="/eventgroups">
                   Event Groups
                 </Button>
                 <Button as={RRLink} to="/time-converter">
