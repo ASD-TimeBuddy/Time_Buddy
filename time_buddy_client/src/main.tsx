@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ColorModeScript, ChakraProvider } from '@chakra-ui/react';
+import { Auth0Provider } from '@auth0/auth0-react';
 import { SWRConfig } from 'swr';
 import type { Fetcher, SWRConfiguration } from 'swr';
+
 import theme from './theme';
 import App from './App';
-import { Auth0Provider } from '@auth0/auth0-react';
 
 class ApiError extends Error {
   info?: any;
