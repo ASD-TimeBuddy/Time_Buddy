@@ -60,7 +60,7 @@ const TimeZoneConverter = (props: TimeZoneConverterProps) => {
           <GridItem colSpan={2}>
               <TimezoneSelect
                 value={selectedTimezone}
-                onChange={setSelectedTimezone}
+                onChange={(zone) => setSelectedTimezone(zone.value)}
               />
           </GridItem>
           <GridItem colSpan={2}>
