@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import {
   Alert,
   AlertIcon,
@@ -10,6 +10,18 @@ import {
   Skeleton,
   SkeletonText,
   useColorModeValue,
+<<<<<<< HEAD
+  Button,
+} from '@chakra-ui/react';
+import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
+import useSWR from 'swr';
+import "react-datepicker/dist/react-datepicker.css";
+import Select from 'react-select';
+import useDate from '../hooks/useDate';
+import { useTimezones } from '../hooks/useTimezones';
+import { cities } from '../data/constants';
+import styles from './App.module.css';
+=======
 } from '@chakra-ui/react';
 import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
 import useSWR from 'swr';
@@ -36,6 +48,7 @@ const SelectTime = () => {
     </div>
   );
 };
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
 
 
 
@@ -45,6 +58,67 @@ const SelectTime = () => {
 
 // use this to fetch the location information from the website
 // use useSWR for all data fetching
+
+
+function SerchTime() {
+  const [selectedOption, setSelectedOption] = useState(null);
+  const { setCity, cityTimezoneList, setCityTimeZoneList } = useTimezones();
+  const handleChange = (option) => {
+    setSelectedOption(option);
+    setCity(option.value);
+  };
+  const remove = (index: number) => {
+    const cityList = [...cityTimezoneList];
+    cityList.splice(index, 1);
+    setCityTimeZoneList(cityList);
+  }
+    return (
+      <Container maxW="3xl" py="4">
+        <Box
+          bg="bg-surface"
+          boxShadow={useColorModeValue('sm', 'sm-dark')}
+          borderRadius="lg"
+          p={{ base: '4', md: '6' }}
+        >
+          <Stack justify="start" align="center" direction="row" spacing="4">
+            <Icon as={FiGlobe} boxSize="6" />
+            <Stack spacing="0.5" fontSize="sm">
+              <div className={styles.App}>
+                <Select
+                  placeholder="Search a city"
+                  defaultValue={selectedOption}
+                  onChange={handleChange}
+                  options={cities}
+                />
+                <br/>       
+                <ul>
+                {
+                    cityTimezoneList.map((item, index) => <li key={index}>
+                      <div className={styles.listItem}>
+                        <div className={styles.location}>
+                          <div className={styles.city}>{item.city} <span className={styles.timeZone}>{item.timeZone}</span></div>
+                          <div className={styles.country}>{item.country}</div>
+                        </div>
+                        <div className={styles.dateTime}>
+                          <div className={styles.time}>{item.time}</div>
+                          <div className={styles.date}>{item.date}</div>
+                        </div>
+                        <div className={styles.operation}>
+                          <Button
+                            onClick={() => remove(index)}
+                            size="xs">Remove</Button>
+                        </div>
+                      </div>
+                    </li>)
+                  }
+                </ul>
+              </div>
+            </Stack>
+          </Stack>
+        </Box>
+      </Container>
+    );}
+
 const useFetchLocation = () => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -70,8 +144,12 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
 
+<<<<<<< HEAD
+  const { date, time } = useDate();
+=======
   const date = new Date();
   const dateToString = date.toString();
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
 
   if (isLoading) {
     return (
@@ -92,6 +170,7 @@ const LocationCardContent = () => {
 
   return (
     <>
+
       <Stack justify="start" align="center" direction="row" spacing="4">
         <Icon as={FiGlobe} boxSize="6" />
         <Stack spacing="0.5" fontSize="sm">
@@ -107,7 +186,7 @@ const LocationCardContent = () => {
           <Text color="emphasized" fontWeight="medium">
             Current Time
           </Text>
-          <Text color="muted">{dateToString}</Text>
+          <Text color="muted">{date}{time}</Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
@@ -132,6 +211,43 @@ const LocationCardContent = () => {
   );
 };
 
+<<<<<<< HEAD
+const LocationCard = () => {
+  const { wish } = useDate();
+  const { date, time } = useDate();
+  return (
+    <Container maxW="3xl" py="4">
+
+      <Box
+        bg="bg-surface"
+        boxShadow={useColorModeValue('sm', 'sm-dark')}
+        borderRadius="lg"
+        p={{ base: '4', md: '6' }}
+      >
+        <Text fontSize="lg" fontWeight="bold">{time}</Text>
+        <Stack spacing="5">
+          <Stack spacing="1">
+            <Text fontSize="lg" fontWeight="bold">{wish}</Text>
+            <Text fontSize="lg" fontWeight="medium">
+              Location
+            </Text>
+            <Text fontSize="sm" color="muted">
+              Do more with time buddy location services.
+            </Text>
+          </Stack>
+          <Box
+            borderWidth={{ base: '0', md: '1px' }}
+            p={{ base: '0', md: '4' }}
+            borderRadius="lg"
+          >
+            <LocationCardContent />
+          </Box>
+        </Stack>
+      </Box>
+    </Container>
+  );
+}
+=======
 const LocationCard = () => (
   <Container maxW="3xl" py="4">
     <Box
@@ -160,6 +276,7 @@ const LocationCard = () => (
     </Box>
   </Container>
 );
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
 
 type CountdownTimerProps = {
   eventDate: Date;
@@ -202,7 +319,7 @@ const CountdownTimer = (props: CountdownTimerProps) => {
   }, [eventDate]);
 
   return isHappening ? (
-    <Alert status="warning">
+    <Alert status="warning" data-testid="countdown-panel">
       <AlertIcon /> Event is happening now!
     </Alert>
   ) : (
@@ -218,12 +335,22 @@ const TimeConverter = () => {
 
   return (
     <>
+
       <CountdownTimer eventDate={target} />
+      <SerchTime />
       <LocationCard />
+<<<<<<< HEAD
+
+=======
       <SelectTime />
       <TimeZoneConverter time={dayjs(Date.now())} />
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
     </>
   );
 };
 
+<<<<<<< HEAD
 export default TimeConverter;
+=======
+export default TimeConverter;
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
