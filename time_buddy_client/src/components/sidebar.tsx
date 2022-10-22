@@ -18,7 +18,8 @@ import {
 
 import Logo from './logo';
 import NavButton from './nav-button';
-import UserProfile from './user-profile';
+import AuthView from './auth/auth-view';
+
 
 const Sidebar = () => (
   <Flex as="section" minH="100vh" bg="bg-canvas">
@@ -59,11 +60,7 @@ const Sidebar = () => (
             <NavButton to="/support" label="Support" icon={FiHelpCircle} />
           </Stack>
           <Divider />
-          <UserProfile
-            name="Euan Mendoza"
-            image="https://tinyurl.com/yhkm2ek8"
-            email="bebopbamf@effectfree.dev"
-          />
+          <AuthView />
         </Stack>
       </Stack>
     </Flex>
