@@ -17,7 +17,7 @@ class Test_CRUD_Events(TestCase):
     def set_up(self):
         # create any Events needed for tests
         Time_Zone(tz_name="AEST").save()
-        record = Event(location=self.obj["location"],summary=self.obj["summary"],description=self.obj["description"])
+        record = Event(location=self.obj["location"],summary=self.obj["summary"],description=self.obj["description"], dt_start=self.obj["dt_start"], dt_end=self.obj["dt_end"])
         record.save()
         
     def test_create_event(self):

@@ -17,6 +17,7 @@ class Test_environment(TestCase):
         """CI pipleline setup test"""
         self.assertEqual(1,1)
 
+
 class Test_GET_API_Events(TestCase):
     """ Test module for GET single event API """
     path = r"./time_buddy_events/test_objs/event.json"
@@ -27,8 +28,8 @@ class Test_GET_API_Events(TestCase):
     def set_up(self):
         # create any Events needed for tests
         self.tz = Time_Zone(tz_name="AEST").save()
-        self.record1 = Event.objects.create(location=self.obj["location"],summary=self.obj["summary"],description=self.obj["description"])
-        self.record2 = Event.objects.create(location='office', summary='fake', description='test desc')
+        self.record1 = Event.objects.create(location=self.obj["location"], summary=self.obj["summary"], description=self.obj["description"], dt_start=self.obj["dt_start"], dt_end=self.obj["dt_end"])
+        self.record2 = Event.objects.create(location='office', summary='fake', description='test desc', dt_start="1970-01-01 00:00:00", dt_end="1970-01-01 01:00:00") 
         
     def test_get_all_events(self):
         # get API response
@@ -115,8 +116,8 @@ class Test_PUT_API_Events(TestCase):
 
     def set_up(self):
         self.tz = Time_Zone(tz_name="AEST").save()
-        self.asd_tutorial = Event.objects.create(summary='ASD Tutoral', location='UTS b02', description="this is NOT a test description")
-        self.id_tutorial = Event.objects.create(summary='Interaction Design Tutorial', location='UTS b11', description="UTS b11")
+        self.asd_tutorial = Event.objects.create(summary='ASD Tutoral', location='UTS b02', description="this is NOT a test description", dt_start="1970-01-01 00:00:00", dt_end="1970-01-01 01:00:00")
+        self.id_tutorial = Event.objects.create(summary='Interaction Design Tutorial', location='UTS b11', description="UTS b11", dt_start="1970-01-01 00:00:00", dt_end="1970-01-01 01:00:00")
         self.valid_payload = self.obj
         self.invalid_payload = {
             'summary':'',
@@ -159,32 +160,26 @@ class Test_DELETE_API_Events(TestCase):
 
     def set_up(self):
         self.tz = Time_Zone(tz_name="AEST").save()
-        self.asd_tutorial = Event.objects.create(summary='ASD Tutoral', location='UTS b02', description="this is NOT a test description")
-        self.id_tutorial = Event.objects.create(summary='Interaction Design Tutorial', location='UTS b11', description="UTS b11")
-        #self.valid_payload = self.obj
-        #self.invalid_payload = {
-        #    'summary':'',
-        #    'location':'something else I guess?',
-        #    'description':''
-        #}
+        self.asd_tutorial = Event.objects.create(summary='ASD Tutoral', location='UTS b02', description="this is NOT a test description", dt_start="1970-01-01 00:00:00", dt_end="1970-01-01 01:00:00")
+        self.id_tutorial = Event.objects.create(summary='Interaction Design Tutorial', location='UTS b11', description="UTS b11", dt_start="1970-01-01 00:00:00", dt_end="1970-01-01 01:00:00")
     
-    def test_valid_update_event(self):
+    def test_valid_delete_event(self):
         #force setup
         self.set_up()
         
-        #get response from putting valid payload
+        #get response from deleting valid payload
         response= client.delete(
             reverse('get_delete_update_event', kwargs={'pk':self.asd_tutorial.pk})
         )
         # test that update succeeds 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         
-    def test_invalid_update_event(self):
+    def test_invalid_delete_event(self):
         #force setup
         self.set_up()
         
-        #get response from putting invalid payload
-        response= client.put(
+        #get response from deleting invalid payload
+        response= client.delete(
             reverse('get_delete_update_event', kwargs={'pk':'0cbc2b45-8067-44e5-ba48-b9b10c72f206'})
         )
         # test that update fails 

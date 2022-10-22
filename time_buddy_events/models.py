@@ -43,6 +43,8 @@ class Event(models.Model):
     location = models.CharField("location",max_length=250)
     summary = models.CharField("summary", max_length=50)
     description = models.CharField("description", max_length=500)
+    dt_start = models.DateTimeField("dt_start", auto_now=False, auto_now_add=False)
+    dt_end = models.DateTimeField("dt_end", auto_now=False, auto_now_add=False)
 
     class Meta:
         ordering = ['event_id']
@@ -53,24 +55,11 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_id
-
-class Event_Instance(models.Model):
-    instance_id = models.UUIDField("insance_id",primary_key=True,default=uuid.uuid4,editable=False)
-    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
-    dt_start = models.DateTimeField("dt_start", auto_now=False, auto_now_add=False)
-    dt_end = models.DateTimeField("dt_end", auto_now=False, auto_now_add=False)
-
-    class Meta:
-        ordering = ['instance_id']
-        db_table = 'event_instances'
-        managed = True
-        verbose_name = 'Event Instance'
-        verbose_name_plural = 'Event Instances'
         
 class Event_Attendance(models.Model):
     attendance_id = models.UUIDField("insance_id",primary_key=True,default=uuid.uuid4,editable=False)
-    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
-    user = models.ForeignKey(
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user= models.ForeignKey(
         User, 
         #allow user to be missing
         blank=False,
