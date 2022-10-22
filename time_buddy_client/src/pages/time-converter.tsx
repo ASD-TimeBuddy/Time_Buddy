@@ -10,16 +10,13 @@ import {
   Skeleton,
   SkeletonText,
   useColorModeValue,
-  Input,
-  Select,
-  Grid,
-  GridItem,
-  Checkbox
 } from '@chakra-ui/react';
 import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
 import useSWR from 'swr';
+import dayjs from 'dayjs';
+
 import useDate from '../hooks/useDate';
-import { TimeZoneConverter } from '../components/time-zone-converter';
+import TimeZoneConverter from '../components/time-converter/time-zone-converter';
 
 
 const SelectTime = () => {
@@ -243,9 +240,8 @@ const TimeConverter = () => {
       <CountdownTimer eventDate={target} />
       <LocationCard />
       <SelectTime />
-      <TimeZoneConverter />
+      <TimeZoneConverter time={dayjs(Date.now())} />
     </>
   );
 };
- 
 export default TimeConverter;
