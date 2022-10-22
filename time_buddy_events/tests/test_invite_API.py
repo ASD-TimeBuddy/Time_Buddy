@@ -36,7 +36,9 @@ class Test_PUT_API_Events_Attendance(TestCase):
         
         #create users and events
         #self.attendee = User.objects.create(user_id=users['0'], email='testEmail@gmail.com')
-        self.attendees = User.objects.bulk_create(users).save()
+        #User.objects.bulk_create(users)
+        user = User.objects.create(user_id='c9898565-e305-48e6-b05a-5b03cbc563f3')
+        print(user)
         self.tz = Time_Zone(tz_name="AEST").save()
         self.asd_tutorial = Event.objects.create(summary='ASD Tutoral', location='UTS b02', description="this is NOT a test description", dt_start="1970-01-01 00:00:00", dt_end="1970-01-01 01:00:00")
         
@@ -52,16 +54,19 @@ class Test_PUT_API_Events_Attendance(TestCase):
         #force setup
         self.set_up()
         
-        factory = APIRequestFactory()
-        view = AttendanceViewSet.as_view(actions={'get':'retrieve'})
-        attendance = Event_Attendance(event_id=self.asd_tutorial, user=User.objects.get(user_id=self.valid_payload))
-        attendance.save()#consider removing
+        #factory = APIRequestFactory()
+        #view = AttendanceViewSet.as_view(actions={'get':'retrieve'})
+        #attendance = []
+        #for n in self.attendees:
+        #    attendance = Event_Attendance(event_id=self.asd_tutorial, user=n)
+        #attendance.save()#consider removing
         
-        request = factory.get(reverse('{self.asdtutorial.pk}/invite/', args=(attendance.pk,)))
-        response = view(request)
+        #request = factory.post(reverse(AttendanceViewSet, args=(self.valid_payload,)))
+        #request = factory.post(reverse('', args=(self.valid_payload,)))
+        #response = view(request)
         
         # test that update succeeds 
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        #self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         
     #def test_invalid_post_attendance(self):
     #    #force setup

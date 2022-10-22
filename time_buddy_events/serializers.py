@@ -5,8 +5,8 @@ from .models import Event
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = '__all__'
-        #fields = ('event_id','location','summary','description')
+        #fields = '__all__'
+        fields = ('event_id','location','summary','description','dt_start', 'dt_end')
         
 class TimeZoneSerializer(serializers.ModelSerializer):
     class Meta:

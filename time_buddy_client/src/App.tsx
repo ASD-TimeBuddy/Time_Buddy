@@ -8,6 +8,7 @@ import Support from './pages/support';
 import EventGroup from './pages/eventgroups';
 import Navbar from './components/navbar';
 import Organisation from './pages/organisation';
+import LoginButton from './pages/loginbutton'
 
 const Layout = () => (
   <Box height="100vh" overflowY="auto">

@@ -53,9 +53,9 @@ def get_delete_update_event(request, pk):
 def get_post_events(request):
     # get all events
     if request.method == 'GET':
-        events = Event.objects.all()
-        serializer = EventSerializer(events, many=True)
-        return Response(serializer.data)
+        #events = Event.objects.all()
+        #serializer = EventSerializer(events, many=True)
+        return Response({})#return Response({})#serializer.data)
     # insert a new event
     elif request.method == 'POST':
         data = {
