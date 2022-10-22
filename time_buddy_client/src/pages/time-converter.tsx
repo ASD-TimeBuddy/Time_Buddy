@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Alert,
   AlertIcon,
@@ -19,7 +19,6 @@ import Select from 'react-select';
 import useDate from '../hooks/useDate';
 import { useTimezones } from '../hooks/useTimezones';
 import { cities } from '../data/constants';
-import styles from './App.module.css';
 
 
 
@@ -33,7 +32,7 @@ import styles from './App.module.css';
 // use useSWR for all data fetching
 
 
-function SerchTime() {
+const SerchTime = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const { setCity, cityTimezoneList, setCityTimeZoneList } = useTimezones();
   const handleChange = (option) => {
@@ -274,12 +273,9 @@ const TimeConverter = () => {
 
   return (
     <>
-
       <CountdownTimer eventDate={target} />
       <SerchTime />
       <LocationCard />
-     
-
     </>
   );
 };
