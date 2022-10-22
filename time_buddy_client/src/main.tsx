@@ -1,19 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, } from 'react-router-dom';
 import { ColorModeScript, ChakraProvider } from '@chakra-ui/react';
 import { SWRConfig } from 'swr';
 import type { Fetcher, SWRConfiguration } from 'swr';
 
 import { Auth0Provider } from '@auth0/auth0-react';
+// import { render } from 'react-dom';
 
 import theme from './theme';
 import App from './App';
 
 
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+const domain = import.meta.env.VITE_AUTH0_DOMAIN;
+const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
+
+// const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+// const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+ if (!domain || !clientId) {
+    throw new Error("Missing Environment Variable!")
+}; 
 
 class ApiError extends Error {
   info?: any;
@@ -43,20 +50,38 @@ const fetcher: Fetcher = async (url: string) => {
 const swrConfig: SWRConfiguration = { fetcher };
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <Auth0Provider
-    domain={domain}
-    client_id={clientId}
-    redirectUri={window.location.origin}
-    >
-    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-    <BrowserRouter>
-      <ChakraProvider theme={theme}>
-        <SWRConfig value={swrConfig}>
-          <App />
-        </SWRConfig>
-      </ChakraProvider>
-    </BrowserRouter>
-    </Auth0Provider>
-  </React.StrictMode>,
-);
+
+    <React.StrictMode>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <BrowserRouter>
+        <ChakraProvider theme={theme}>
+          <SWRConfig value={swrConfig}>
+            <Auth0Provider
+              domain={domain}
+              clientId={clientId}
+              redirectUri={window.location.origin}
+            >
+              <App />
+            </Auth0Provider>
+          </SWRConfig>
+        </ChakraProvider>
+      </BrowserRouter>
+    </React.StrictMode>,
+  
+); 
+
+/* 
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+
+    <React.StrictMode>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <BrowserRouter>
+        <ChakraProvider theme={theme}>
+          <SWRConfig value={swrConfig}>
+            <App />
+          </SWRConfig>
+        </ChakraProvider>
+      </BrowserRouter>
+    </React.StrictMode>
+); 
+*/

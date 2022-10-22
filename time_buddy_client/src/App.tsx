@@ -7,6 +7,7 @@ import Calendar from './pages/calendar';
 import Support from './pages/support';
 // import Register from './pages/register';
 import Navbar from './components/navbar';
+import LoginButton from './pages/auth';
 
 const Layout = () => (
   <Box height="100vh" overflowY="auto">
@@ -24,7 +25,7 @@ const App = () => (
       <Route path="time-converter" element={<TimeConverter />} />
       <Route path="calendar" element={<Calendar />} />
       <Route path="support" element={<Support />} />
-      
+      <Route path="login" element={<LoginButton />} />
     </Route>
   </Routes>
 );

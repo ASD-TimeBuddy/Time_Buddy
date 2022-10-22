@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from .models import Event
-from .serializers import Event_Serializer
+from .serializers import EventSerializer
 # Create your views here.
 # based on https://www.geeksforgeeks.org/django-rest-api-crud-with-drf/
 
@@ -29,12 +29,12 @@ def get_delete_update_event(request, pk):
 
     # get single event
     if request.method == 'GET':
-        serializer = Event_Serializer(event)
+        serializer = EventSerializer(event)
         return Response(serializer.data)
     
     # update a single event
     elif request.method == 'PUT':
-        serializer = Event_Serializer(event, data=request.data)
+        serializer = EventSerializer(event, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
@@ -50,7 +50,7 @@ def get_post_events(request):
     # get all events
     if request.method == 'GET':
         events = Event.objects.all()
-        serializer = Event_Serializer(events, many=True)
+        serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
     # insert a new event
     elif request.method == 'POST':
@@ -61,7 +61,7 @@ def get_post_events(request):
         }
         
         #validate request using serializer, then save
-        serializer = Event_Serializer(data=data)
+        serializer = EventSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -4,7 +4,7 @@ from rest_framework import status
 from django.test import TestCase, Client
 from django.urls import reverse
 from ..models import Event, Time_Zone
-from ..serializers import Event_Serializer
+from ..serializers import EventSerializer
 
 class Test_CRUD_Events(TestCase):
     #path = r"D:/Current/AdvSoftwareDev/Time_Buddy/time_buddy_events/test_objs/event.json"

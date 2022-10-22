@@ -66,3 +66,21 @@ class Event_Instance(models.Model):
         managed = True
         verbose_name = 'Event Instance'
         verbose_name_plural = 'Event Instances'
+        
+class Event_Attendance(models.Model):
+    attendance_id = models.UUIDField("insance_id",primary_key=True,default=uuid.uuid4,editable=False)
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, 
+        #allow user to be missing
+        blank=False,
+        null=False, 
+        on_delete=models.CASCADE
+        )
+
+    class Meta:
+        ordering = ['attendance_id']
+        db_table = 'event_attendance'
+        managed = True
+        verbose_name = 'Event attendance'
+        verbose_name_plural = 'Event attendance'
