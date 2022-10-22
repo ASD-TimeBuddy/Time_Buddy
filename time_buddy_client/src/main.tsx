@@ -6,11 +6,7 @@ import { SWRConfig } from 'swr';
 import type { Fetcher, SWRConfiguration } from 'swr';
 import theme from './theme';
 import App from './App';
-
 import { Auth0Provider } from '@auth0/auth0-react';
-
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 class ApiError extends Error {
   info?: any;
@@ -55,6 +51,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </ChakraProvider>
     </BrowserRouter>
     </Auth0Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
 

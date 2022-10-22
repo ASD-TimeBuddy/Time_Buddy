@@ -22,12 +22,23 @@ const Layout = () => (
 function App() {
   const { isLoading, error } = useAuth0();
  
+ <Routes>
+  <Route path="/" element={<Layout />}>
+    <Route index element={<Home />} />
+    <Route path="time-converter" element={<TimeConverter />} />
+    <Route path="calendar" element={<Calendar />} />
+    <Route path="support" element={<Support />} />
+    
+  </Route>
+ </Routes>
+ 
   return (
     <div className="App">
       <h1>Auth0 Login</h1>
         <LoginButton />
         <LogoutButton />
     </div>
+    
   );
 }
 
