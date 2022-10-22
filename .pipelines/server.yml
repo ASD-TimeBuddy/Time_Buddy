@@ -32,7 +32,7 @@ stages:
 
           - script: |
               pushd '$(projectRoot)'
-              DJANGO_DEBUG=true python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
+              python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
             displayName: "Run tests"
   
       - job: Build
@@ -60,3 +60,39 @@ stages:
               tags: |
                 build-$(Build.BuildId)
                 latest
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathToPublish: ./app-spec.yml
+              ArtifactName: app-spec.yml
+
+  - stage: ServerCD
+    displayName: 'Deploy Client to Cloudflare'
+    dependsOn: ServerCI
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - deployment: DeployServer
+    
+        pool:
+          vmImage: ubuntu-latest
+    
+        environment: Server
+
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: app-spec.yml
+          
+                - script: |
+                    curl -OL https://github.com/digitalocean/doctl/releases/download/v1.84.0/doctl-1.84.0-linux-amd64.tar.gz
+                    tar -xvf doctl-1.84.0-linux-amd64.tar.gz
+                    mv ./doctl /usr/local/bin
+                  displayName: 'Install Doctl CLI tool'
+
+                - script: doctl apps update $APPID --spec $(Pipeline.Workspace)/app-spec.yml/app-spec.yml -t $TOKEN
+                  displayName: 'Deploy App'
+                  env:
+                    TOKEN: $(apiToken)
+

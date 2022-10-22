@@ -10,6 +10,7 @@ import {
   Skeleton,
   SkeletonText,
   useColorModeValue,
+<<<<<<< HEAD
   Button,
 } from '@chakra-ui/react';
 import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
@@ -20,6 +21,34 @@ import useDate from '../hooks/useDate';
 import { useTimezones } from '../hooks/useTimezones';
 import { cities } from '../data/constants';
 import styles from './App.module.css';
+=======
+} from '@chakra-ui/react';
+import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
+import useSWR from 'swr';
+import dayjs from 'dayjs';
+
+import useDate from '../hooks/useDate';
+import TimeZoneConverter from '../components/time-converter/time-zone-converter';
+
+
+const SelectTime = () => {
+  const { date, time, wish } = useDate();
+
+  return (
+    <div className="greetings-container">
+      <h1>{wish}</h1>
+
+      <div>
+        <h3>
+          {date}
+          <br />
+          {time}
+        </h3>
+      </div>
+    </div>
+  );
+};
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
 
 
 
@@ -115,7 +144,12 @@ const useFetchLocation = () => {
 const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
 
+<<<<<<< HEAD
   const { date, time } = useDate();
+=======
+  const date = new Date();
+  const dateToString = date.toString();
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
 
   if (isLoading) {
     return (
@@ -177,6 +211,7 @@ const LocationCardContent = () => {
   );
 };
 
+<<<<<<< HEAD
 const LocationCard = () => {
   const { wish } = useDate();
   const { date, time } = useDate();
@@ -212,6 +247,36 @@ const LocationCard = () => {
     </Container>
   );
 }
+=======
+const LocationCard = () => (
+  <Container maxW="3xl" py="4">
+    <Box
+      bg="bg-surface"
+      boxShadow={useColorModeValue('sm', 'sm-dark')}
+      borderRadius="lg"
+      p={{ base: '4', md: '6' }}
+    >
+      <Stack spacing="5">
+        <Stack spacing="1">
+          <Text fontSize="lg" fontWeight="medium">
+            Location
+          </Text>
+          <Text fontSize="sm" color="muted">
+            Do more with time buddy location services.
+          </Text>
+        </Stack>
+        <Box
+          borderWidth={{ base: '0', md: '1px' }}
+          p={{ base: '0', md: '4' }}
+          borderRadius="lg"
+        >
+          <LocationCardContent />
+        </Box>
+      </Stack>
+    </Box>
+  </Container>
+);
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
 
 type CountdownTimerProps = {
   eventDate: Date;
@@ -274,9 +339,18 @@ const TimeConverter = () => {
       <CountdownTimer eventDate={target} />
       <SerchTime />
       <LocationCard />
+<<<<<<< HEAD
 
+=======
+      <SelectTime />
+      <TimeZoneConverter time={dayjs(Date.now())} />
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
     </>
   );
 };
 
+<<<<<<< HEAD
 export default TimeConverter;
+=======
+export default TimeConverter;
+>>>>>>> 10135c38e2e7f72bd8266d73cc6b222c6aede2da
