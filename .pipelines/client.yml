@@ -28,17 +28,15 @@ stages:
 
     - script: yarn install
       workingDirectory: $(working-dir)
+      displayName: Install Dependancies
 
     - script: yarn lint 
       workingDirectory: $(working-dir)
+      displayName: Linting Tests
 
     - script: yarn test
       workingDirectory: $(working-dir)
-    
-    - task: PublishBuildArtifacts@1
-      inputs:
-        pathToPublish: $(working-dir)/coverage
-        ArtifactName: test-report
+      displayName: Unit Tests
   
   - job: Build
     dependsOn: Test
@@ -53,12 +51,10 @@ stages:
         versionSpec: '16.x'
       displayName: 'Install Node.js'
 
-    - displayName: 'Install Yarn'
-      script: yarn install
-      workingDirectory: $(working-dir)
-
-    - displayName: 'Build Project'
-      script: yarn build
+    - script: |
+        yarn install
+        yarn build
+      displayName: 'Build Project'
       workingDirectory: $(working-dir)
   
     - task: PublishBuildArtifacts@1
