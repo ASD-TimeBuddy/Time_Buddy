@@ -29,10 +29,10 @@ const EventGroup = () => (
                 Join an event group.
             </Text>
             <FormControl isRequired>
-                <Input type='password' fontSize="sm" color="muted" placeholder='Enter password' />
+                <Input type='password' fontSize="sm" color="muted" placeholder='Enter password' value={group_password} />
             </FormControl>
 
-            <Button bg="bg-accent" color="on-accent" size='sm' width='100px'>
+            <Button bg="bg-accent" color="on-accent" size='sm' width='100px' onClick={joinGroup}>
                 Join
             </Button>
             
@@ -41,6 +41,11 @@ const EventGroup = () => (
         </Stack>
     </Box>
     </Container>
+);
+const joinGroup = () => (
+     
+    console.log('join group')
+  
 );
   
 export default EventGroup;
