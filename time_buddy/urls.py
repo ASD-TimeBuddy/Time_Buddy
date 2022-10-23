@@ -37,5 +37,4 @@ urlpatterns = [
     path('events/', include('time_buddy_events.urls')),
     path('support/', include('time_buddy_support.urls')),
     path('admin/', admin.site.urls),
-    path('api/', include('auth0authenticator.urls'))
 ]

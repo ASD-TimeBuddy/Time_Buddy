@@ -35,10 +35,30 @@ ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split('
 LOGGING_CONFIG = None
 
 # Auth0-2 detials
+# update the following line to your path
 AUDIENCE = os.getenv('AUDIENCE')
 DOMAIN = os.getenv('DOMAIN')
-LOGIN_URL='/admin/login/'
 
+SOCIAL_AUTH_AUTH0_DOMAIN=os.getenv('SOCIAL_AUTH_AUTH0_DOMAIN')
+SOCIAL_AUTH_AUTH0_KEY=os.getenv('SOCIAL_AUTH_AUTH0_KEY')
+SOCIAL_AUTH_AUTH0_SECRET=os.getenv('SOCIAL_AUTH_AUTH0_SECRET')
+
+# Setting up Auth0 Scope
+SOCIAL_AUTH_AUTH0_SCOPE = [
+    'openid',
+    'events'
+]
+
+# Setting up Authentication Backends
+AUTHENTICATION_BACKENDS = [
+    'auth0login.auth0backend.Auth0',
+    # Uncommment following if you want to access the admin'
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Setting up login and redirect URLs
+LOGIN_URL='/login/auth0/'
+LOGIN_REDIRECT_URL = "/"
 
 # Get loglevel from env
 LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
@@ -71,7 +91,7 @@ INSTALLED_APPS = [
     'time_buddy_events.apps.TimeBuddyEventsConfig',
     'time_buddy_support.apps.TimeBuddySupportConfig',
     'time_buddy_groups.apps.TimeBuddyGroupsConfig',
-    'auth0authenticator.apps.Auth0AuthenticatorConfig',
+    'auth0login.apps.Auth0LoginConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,14 +102,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
-    'oauth2_provider'
-]
-
-AUTHENTICATION_BACKENDS = [
-    'oauth2_provider.backends.OAuth2Backend',
-    # Uncommment following if you want to access the admin'
-    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [
