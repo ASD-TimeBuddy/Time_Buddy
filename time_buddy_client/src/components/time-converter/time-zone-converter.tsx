@@ -1,28 +1,59 @@
 import { useState } from 'react';
+import zip from 'lodash/zip';
 import DateTimePicker from 'react-datetime-picker';
 import {
   Box,
   Stack,
   Container,
   Text,
+  Button,
   FormControl,
   FormLabel,
   FormHelperText,
   useColorModeValue,
 } from '@chakra-ui/react';
+import format from 'date-fns/fp/format';
 import utcToZonedTime from 'date-fns-tz/fp/utcToZonedTime';
 
 import CountdownTimer from './countdown-timer';
+import SelectTimeZone from './select-time-zone';
 
-// import { timezones } from '../data/constants';
+import { timezones } from '../../data/constants';
 
 // for transformative functions prefer currying
-export const convertTz = utcToZonedTime;
+export const convertTz = (date: Date) => (zone: string) =>
+  utcToZonedTime(zone, date);
 
 const TimeConverterCardContent = () => {
   const [date, setDate] = useState<Date>(new Date());
+  const [zone, setZone] = useState<string>('GMT');
+  const [zones, setZones] = useState<string[]>([]);
+  const [times, setTimes] = useState<string[]>([]);
 
-  const handleSelectDates = (value: Date) => setDate(value);
+  const convertTzD = convertTz(date);
+  const formatter = format('do MMMM yyyy hh:mm aa');
+
+  const handleSelectDates = (d: Date) => setDate(d);
+  const handleSelectZone = (z: string) => {
+    setZone(z);
+  };
+
+  const handleConvertDate = () => {
+    const newZones = [...zones, zone];
+    setZones(() => newZones);
+    setTimes(() => newZones.map(convertTzD).map(formatter));
+  };
+
+  const convertedZones = zip(zones, times).map(([z, t]) => (
+    <Stack>
+      <Text fontSize="md" fontWeight="medium">{`Location: ${z}`}</Text>
+      <Text fontSize="sm">{t}</Text>
+    </Stack>
+  ));
+
+  console.log(zone);
+  console.log(times);
+  console.log(zones);
 
   return (
     <Box
@@ -44,6 +75,15 @@ const TimeConverterCardContent = () => {
             What do you want to convert to an international time!
           </FormHelperText>
         </FormControl>
+        <SelectTimeZone
+          placeholder={timezones.GMT}
+          zones={timezones}
+          onChange={handleSelectZone}
+        />
+        <Button bg="bg-accent" color="on-accent" onClick={handleConvertDate}>
+          Add
+        </Button>
+        {convertedZones}
       </Stack>
     </Box>
   );
