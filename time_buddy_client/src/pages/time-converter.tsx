@@ -14,15 +14,11 @@ import {
 } from '@chakra-ui/react';
 import { FiCloud, FiThermometer, FiGlobe, FiClock } from 'react-icons/fi';
 import useSWR from 'swr';
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
 import useDate from '../hooks/useDate';
 import { useTimezones } from '../hooks/useTimezones';
 import { cities } from '../data/constants';
-
-
-
-
 
 // import dayjs from 'dayjs';
 
@@ -31,8 +27,7 @@ import { cities } from '../data/constants';
 // use this to fetch the location information from the website
 // use useSWR for all data fetching
 
-
-const SerchTime = () => {
+const SearchTime = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const { setCity, cityTimezoneList, setCityTimeZoneList } = useTimezones();
   const handleChange = (option) => {
@@ -43,53 +38,59 @@ const SerchTime = () => {
     const cityList = [...cityTimezoneList];
     cityList.splice(index, 1);
     setCityTimeZoneList(cityList);
-  }
-    return (
-      <Container maxW="3xl" py="4">
-        <Box
-          bg="bg-surface"
-          boxShadow={useColorModeValue('sm', 'sm-dark')}
-          borderRadius="lg"
-          p={{ base: '4', md: '6' }}
-        >
-          <Stack justify="start" align="center" direction="row" spacing="4">
-            <Icon as={FiGlobe} boxSize="6" />
-            <Stack spacing="0.5" fontSize="sm">
-              <div className={styles.App}>
-                <Select
-                  placeholder="Search a city"
-                  defaultValue={selectedOption}
-                  onChange={handleChange}
-                  options={cities}
-                />
-                <br/>       
-                <ul>
-                {
-                    cityTimezoneList.map((item, index) => <li key={index}>
-                      <div className={styles.listItem}>
-                        <div className={styles.location}>
-                          <div className={styles.city}>{item.city} <span className={styles.timeZone}>{item.timeZone}</span></div>
-                          <div className={styles.country}>{item.country}</div>
+  };
+  return (
+    <Container maxW="3xl" py="4">
+      <Box
+        bg="bg-surface"
+        boxShadow={useColorModeValue('sm', 'sm-dark')}
+        borderRadius="lg"
+        p={{ base: '4', md: '6' }}
+      >
+        <Stack justify="start" align="center" direction="row" spacing="4">
+          <Icon as={FiGlobe} boxSize="6" />
+          <Stack spacing="0.5" fontSize="sm">
+            <div className={styles.App}>
+              <Select
+                placeholder="Search a city"
+                defaultValue={selectedOption}
+                onChange={handleChange}
+                options={cities}
+              />
+              <br />
+              <ul>
+                {cityTimezoneList.map((item, index) => (
+                  <li key={index}>
+                    <div className={styles.listItem}>
+                      <div className={styles.location}>
+                        <div className={styles.city}>
+                          {item.city}{' '}
+                          <span className={styles.timeZone}>
+                            {item.timeZone}
+                          </span>
                         </div>
-                        <div className={styles.dateTime}>
-                          <div className={styles.time}>{item.time}</div>
-                          <div className={styles.date}>{item.date}</div>
-                        </div>
-                        <div className={styles.operation}>
-                          <Button
-                            onClick={() => remove(index)}
-                            size="xs">Remove</Button>
-                        </div>
+                        <div className={styles.country}>{item.country}</div>
                       </div>
-                    </li>)
-                  }
-                </ul>
-              </div>
-            </Stack>
+                      <div className={styles.dateTime}>
+                        <div className={styles.time}>{item.time}</div>
+                        <div className={styles.date}>{item.date}</div>
+                      </div>
+                      <div className={styles.operation}>
+                        <Button onClick={() => remove(index)} size="xs">
+                          Remove
+                        </Button>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Stack>
-        </Box>
-      </Container>
-    );}
+        </Stack>
+      </Box>
+    </Container>
+  );
+};
 
 const useFetchLocation = () => {
   const [latitude, setLatitude] = useState(0);
@@ -117,7 +118,6 @@ const LocationCardContent = () => {
   const { locationData, isLoading, isError } = useFetchLocation();
   const { date, time } = useDate();
 
-
   if (isLoading) {
     return (
       <>
@@ -137,7 +137,6 @@ const LocationCardContent = () => {
 
   return (
     <>
-
       <Stack justify="start" align="center" direction="row" spacing="4">
         <Icon as={FiGlobe} boxSize="6" />
         <Stack spacing="0.5" fontSize="sm">
@@ -153,7 +152,10 @@ const LocationCardContent = () => {
           <Text color="emphasized" fontWeight="medium">
             Current Time
           </Text>
-          <Text color="muted">{date}{time}</Text>
+          <Text color="muted">
+            {date}
+            {time}
+          </Text>
         </Stack>
       </Stack>
       <Stack justify="start" align="center" direction="row" spacing="4">
@@ -178,23 +180,25 @@ const LocationCardContent = () => {
   );
 };
 
-
 const LocationCard = () => {
   const { wish } = useDate();
   const { date, time } = useDate();
   return (
     <Container maxW="3xl" py="4">
-
       <Box
         bg="bg-surface"
         boxShadow={useColorModeValue('sm', 'sm-dark')}
         borderRadius="lg"
         p={{ base: '4', md: '6' }}
       >
-        <Text fontSize="lg" fontWeight="bold">{time}</Text>
+        <Text fontSize="lg" fontWeight="bold">
+          {time}
+        </Text>
         <Stack spacing="5">
           <Stack spacing="1">
-            <Text fontSize="lg" fontWeight="bold">{wish}</Text>
+            <Text fontSize="lg" fontWeight="bold">
+              {wish}
+            </Text>
             <Text fontSize="lg" fontWeight="medium">
               Location
             </Text>
@@ -213,8 +217,7 @@ const LocationCard = () => {
       </Box>
     </Container>
   );
-}
-
+};
 
 type CountdownTimerProps = {
   eventDate: Date;
@@ -274,12 +277,10 @@ const TimeConverter = () => {
   return (
     <>
       <CountdownTimer eventDate={target} />
-      <SerchTime />
+      <SearchTime />
       <LocationCard />
     </>
   );
 };
 
-
 export default TimeConverter;
-
