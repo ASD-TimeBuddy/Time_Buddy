@@ -1,6 +1,5 @@
 import { Link as RRLink } from 'react-router-dom';
 import {
-  Avatar,
   Box,
   Button,
   ButtonGroup,
@@ -16,9 +15,11 @@ import {
 } from '@chakra-ui/react';
 import { FiHelpCircle } from 'react-icons/fi';
 
+import AuthView from './auth/auth-view';
 import Sidebar from './sidebar';
 import Logo from './logo';
 import ToggleButton from './toggle-button';
+
 
 const Navbar = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -40,20 +41,11 @@ const Navbar = () => {
                 <Button as={RRLink} to="/">
                   Home
                 </Button>
-                <Button as={RRLink} to="/organisation">
-                  Organisation
-                </Button>
-                <Button as={RRLink} to="/eventgroups">
-                  Event Groups
-                </Button>
-                <Button as={RRLink} to="/time-converter">
+                <Button as={RRLink} to="/time-converter" data-testid="time-converter-button">
                   International Time Converter
                 </Button>
                 <Button as={RRLink} to="/calendar">
                   Calendar
-                </Button>
-                <Button as={RRLink} to="/login">
-                  Login
                 </Button>
               </ButtonGroup>
             )}
@@ -69,11 +61,7 @@ const Navbar = () => {
                   data-testid="support-link"
                 />
               </ButtonGroup>
-              <Avatar
-                boxSize="10"
-                name="Euan Mendoza"
-                src="https://tinyurl.com/yhkm2ek8"
-              />
+              <AuthView />
             </HStack>
           ) : (
             <>

@@ -1,6 +1,5 @@
 import { Box, Container } from '@chakra-ui/react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-
 import Home from './pages/home';
 import TimeConverter from './pages/time-converter';
 import Calendar from './pages/calendar';
@@ -28,7 +27,6 @@ const App = () => (
       <Route path="time-converter" element={<TimeConverter />} />
       <Route path="calendar" element={<Calendar />} />
       <Route path="support" element={<Support />} />
-      <Route path="login" element={<LoginButton />} />
     </Route>
   </Routes>
 );

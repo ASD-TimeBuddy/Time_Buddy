@@ -1,98 +1,112 @@
 import { useState } from 'react';
+import zip from 'lodash/zip';
+import DateTimePicker from 'react-datetime-picker';
 import {
   Box,
+  Stack,
   Container,
   Text,
+  Button,
+  FormControl,
+  FormLabel,
+  FormHelperText,
   useColorModeValue,
-  Input,
-  Checkbox,
-  Grid,
-  GridItem,
 } from '@chakra-ui/react';
-import TimezoneSelect from 'react-timezone-select';
-import dayjs from 'dayjs';
-import type { Dayjs } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import format from 'date-fns/fp/format';
+import utcToZonedTime from 'date-fns-tz/fp/utcToZonedTime';
 
-import DatePicker from "react-datepicker";
+import CountdownTimer from './countdown-timer';
+import SelectTimeZone from './select-time-zone';
+
+import { timezones } from '../../data/constants';
 
 // for transformative functions prefer currying
-export const convertTz = (time: Dayjs) => (zone: string) => {
-  dayjs.extend(utc);
-  dayjs.extend(timezone);
-  
-  return time.tz(zone);
-}
+export const convertTz = (date: Date) => (zone: string) =>
+  utcToZonedTime(zone, date);
 
-type TimeZoneConverterProps = {
-  time: Dayjs
-};
+const TimeConverterCardContent = () => {
+  const [date, setDate] = useState<Date>(new Date());
+  const [zone, setZone] = useState<string>('GMT');
+  const [zones, setZones] = useState<string[]>([]);
+  const [times, setTimes] = useState<string[]>([]);
 
-const TimeZoneConverter = (props: TimeZoneConverterProps) => {
-  const { time } = props;
+  const convertTzD = convertTz(date);
+  const formatter = format('do MMMM yyyy hh:mm aa');
 
-  const [selectedDate, setSelectedDate] = useState(time);
+  const handleSelectDates = (d: Date) => setDate(d);
+  const handleSelectZone = (z: string) => {
+    setZone(z);
+  };
 
-  const [selectedTimezone, setSelectedTimezone] = useState(
-    Intl.DateTimeFormat().resolvedOptions().timeZone,
-  );
+  const handleConvertDate = () => {
+    const newZones = [...zones, zone];
+    setZones(() => newZones);
+    setTimes(() => newZones.map(convertTzD).map(formatter));
+  };
 
-  const convertTzSelected = convertTz(selectedDate)(selectedTimezone);
+  const convertedZones = zip(zones, times).map(([z, t]) => (
+    <Stack>
+      <Text fontSize="md" fontWeight="medium">{`Location: ${z}`}</Text>
+      <Text fontSize="sm">{t}</Text>
+    </Stack>
+  ));
 
   return (
-    <Container maxW="3xl" py="4">
-      <Box
-        bg="bg-surface"
-        boxShadow={useColorModeValue('sm', 'sm-dark')}
-        borderRadius="lg"
-        p={{ base: '4', md: '8' }}
+    <Box
+      as="form"
+      borderWidth={{ base: '0', md: '1px' }}
+      p={{ base: '0', md: '4' }}
+      borderRadius="lg"
+    >
+      <Stack
+        spacing="5"
+        px={{ base: '4', md: '6' }}
+        py={{ base: '5', md: '6' }}
       >
-      <Grid
-          templateRows='1fr 0.5fr 2fr'
-          templateColumns='repeat(5, 1fr)'
-          gap={4}
-          h='200px'
-        >
-          <GridItem colSpan={1}>
-              <Text> Source: </Text>
-          </GridItem>
-          <GridItem colSpan={2}>
-              <TimezoneSelect
-                value={selectedTimezone}
-                onChange={(zone) => setSelectedTimezone(zone.value)}
-              />
-          </GridItem>
-          <GridItem colSpan={2}>
-            <Box border="1px solid #3182ce">
-              <DatePicker
-                selected={selectedDate.toDate()}
-                onChange={(date) => setSelectedDate(dayjs(date))}
-                showTimeSelect
-                dateFormat="MM dd, yyyy hh:mm aa"
-              />
-  
-            </Box>
-          </GridItem>
-          
-        
-          <GridItem colSpan={5}>
-              <Text>Use current timezone and date/time: <b>{`${selectedTimezone} ${selectedDate.format('MM dd, yyyy hh:mm aa')}`}</b></Text>
-              <Checkbox data-testid="current-timezone-selector" defaultChecked={!selectedTimezone} />
-              <br/>
-          </GridItem>
-          <GridItem colSpan={1}>
-              <Text> Target: </Text>
-          </GridItem>
-          
-          <GridItem colSpan={2} >
-              <Input disabled placeholder="" variant="outline" borderColor="#3182ce" colorScheme="white" value={convertTzSelected.format('MM dd, yyyy hh:mm aa')}/>
-          </GridItem>
-        </Grid>
-      </Box>
-  
-      </Container>
+        <CountdownTimer eventDate={date} />
+        <FormControl>
+          <FormLabel>Select Date and Time</FormLabel>
+          <DateTimePicker onChange={handleSelectDates} value={date} />
+          <FormHelperText>
+            What do you want to convert to an international time!
+          </FormHelperText>
+        </FormControl>
+        <SelectTimeZone
+          placeholder={timezones.GMT}
+          zones={timezones}
+          onChange={handleSelectZone}
+        />
+        <Button bg="bg-accent" color="on-accent" onClick={handleConvertDate}>
+          Add
+        </Button>
+        {convertedZones}
+      </Stack>
+    </Box>
   );
-}
+};
+
+const TimeZoneConverter = () => (
+  <Container maxW="3xl" py="4">
+    <Box
+      bg="bg-surface"
+      boxShadow={useColorModeValue('sm', 'sm-dark')}
+      borderRadius="lg"
+      p={{ base: '4', md: '6' }}
+    >
+      <Stack spacing="5">
+        <Stack spacing="1">
+          <Text fontSize="lg" fontWeight="bold">
+            Convert Time
+          </Text>
+          <Text fontSize="sm" color="muted">
+            You can convert some time into any timezone here.
+          </Text>
+        </Stack>
+
+        <TimeConverterCardContent />
+      </Stack>
+    </Box>
+  </Container>
+);
 
 export default TimeZoneConverter;
