@@ -10,6 +10,7 @@
     "test": "jest --coverage"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^1.12.0",
     "@chakra-ui/icons": "^2.0.8",
     "@chakra-ui/pro-theme": "^0.0.53",
     "@chakra-ui/react": "^2.2.8",
