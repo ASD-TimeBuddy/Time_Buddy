@@ -51,10 +51,6 @@ const TimeConverterCardContent = () => {
     </Stack>
   ));
 
-  console.log(zone);
-  console.log(times);
-  console.log(zones);
-
   return (
     <Box
       as="form"
