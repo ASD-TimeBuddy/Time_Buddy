@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
-    attandees = UserSerializer(many=True, read_only=True) #not sure about read only
+    attendees = UserSerializer(many=True, read_only=True) #not sure about read only
     
     class Meta:
         model = Event

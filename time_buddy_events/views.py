@@ -8,7 +8,7 @@ from rest_framework import routers, serializers, viewsets, status
 
 from rest_framework import status
 from rest_framework import filters
-from .models import Event, User 
+from .models import Event, User
 from .serializers import EventSerializer, UserSerializer
 # Create your views here.
 # based on https://www.geeksforgeeks.org/django-rest-api-crud-with-drf/
@@ -21,8 +21,28 @@ class UserViewSet(viewsets.ModelViewSet):
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    
 
+# class AttendeesViewSet(viewsets.ModelViewSet):
+#     def get_queryset(self):
+#         queryset = User.objects.all()
+#         event = Event.objects.filter(event_pk=self.kwargs['event_id'])
+#         return queryset.filter(event_pk=self.kwargs['event_pk']).prefetch_related(Prefetch('event_set', queryset=event))
+    
+class AttendeesViewSet(viewsets.ViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    
+    def list(self, request, event_pk=None):
+        event = self.queryset.filter(event_id=event_pk).values_list('attendees')
+        attendees = User.objects.filter(pk__in=event)
+        serializer = UserSerializer(attendees, many=True)
+        return Response(serializer.data)
+    
+    def retrive(self, request, pk=None, event_pk=None):
+        attendees = self.queryset.get(pk=pk, event_id=event_pk)
+        serializer = UserSerializer(attendees, many=False)
+        return Response(serializer.data)
+    
 
 # # for info on decorators see - https://stackoverflow.com/questions/6392739/what-does-the-at-symbol-do-in-python
 # # @api_view passes the decorated fuction as an argument in the api_view function
