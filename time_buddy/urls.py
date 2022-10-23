@@ -35,5 +35,6 @@ urlpatterns = [
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('events/', include('time_buddy_events.urls')),
     path('support/', include('time_buddy_support.urls')),
+    path('organisations/', include('time_buddy_groups.urls')),
     path('admin/', admin.site.urls),
 ]
