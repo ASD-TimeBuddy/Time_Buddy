@@ -39,9 +39,9 @@ const swrConfig: SWRConfiguration = { fetcher };
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Auth0Provider
-    domain='dev-l82qf3dfft7e70pt.us.auth0.com'
-    clientId='35WQgoj57B7WWjUGhdIDpvHRwewJdKoc'
-    redirectUri={window.location.origin}
+      domain='dev-l82qf3dfft7e70pt.us.auth0.com'
+      clientId='35WQgoj57B7WWjUGhdIDpvHRwewJdKoc'
+      redirectUri={window.location.origin}
     >
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <BrowserRouter>
