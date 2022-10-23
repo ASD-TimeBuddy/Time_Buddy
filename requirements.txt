@@ -1,8 +1,12 @@
 python-dotenv==0.21.0
+cryptography~=2.8
 Django==4.1
 django-filter==22.1
 djangorestframework==3.13.1
 django-cors-headers==3.13.0
+drf-jwt==1.13.3
+pyjwt==1.7.1
+requests=2.22.0
 django-storages==1.13.1
 boto3==1.24.84
 Markdown==3.4.1
