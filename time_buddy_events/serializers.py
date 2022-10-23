@@ -15,7 +15,8 @@ class UserSerializer(serializers.ModelSerializer):
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
-        fields = '__all__'
+        #fields = '__all__'
+        fields = ('event','user','is_attending')
     def create(self, validated_data):
         #don't duplicate entires
         if not Attendance.objects.filter(**validated_data).exists():
@@ -44,12 +45,3 @@ class EventSerializer(serializers.ModelSerializer):
     
     #     return instance
         
-#class EventAttendanceSerializer(serializers.ModelSerializer):
-#    event = EventSerializer(many=False, read_only=True) 
-#    # read_only=True should mean only members can be invited
-#    attendees = UserSerializer(many=True, read_only=True)
-#    class Meta:
-#        ordering = ['-event_id']
-#        model = Event
-#        fields = ('attendance_id','event_id''user_id')
-#        #extra_kwargs = {'attendance_id': {required:False}} #not necessary due to defaults

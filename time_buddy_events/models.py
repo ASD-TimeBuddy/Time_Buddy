@@ -59,9 +59,14 @@ class Event(models.Model):
 
 # https://docs.djangoproject.com/en/4.1/topics/db/models/#intermediary-manytomany
 class Attendance(models.Model):
+    class Meta:
+        unique_together = (('user','event'))
+        ordering =['event']
+        
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     is_attending = models.BooleanField(default=0)
+
   
 # class Event_Attendance(models.Model):
 #     attendance_id = models.UUIDField("insance_id",primary_key=True,default=uuid.uuid4,editable=False)

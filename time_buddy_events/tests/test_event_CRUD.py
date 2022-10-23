@@ -22,14 +22,14 @@ class Test_CRUD_Events(TestCase):
         
     def test_create_event(self):
         #count the number of events
-        query = Event.objects.filter(summary__contains=self.obj["summary"])
+        query = Event.objects.filter(summary__contains=self.obj["summary"], dt_start=self.obj["dt_start"], dt_end=self.obj["dt_end"])
         pre_count = query.count()
         
         #Create a new event
         self.set_up()
         
         #Check that a new event was added
-        query = Event.objects.filter(summary__contains=self.obj["summary"])
+        query = Event.objects.filter(summary__contains=self.obj["summary"], dt_start=self.obj["dt_start"], dt_end=self.obj["dt_end"])
         self.assertEqual(query.count(),pre_count + 1)
     
     def test_read_event(self):
@@ -38,5 +38,5 @@ class Test_CRUD_Events(TestCase):
             #Event(location=self.obj["location"],summary=self.obj["summary"],description=self.obj["description"]).save()
         #retrive a single entry
         self.set_up()
-        query = Event.objects.get(summary__contains=self.obj["summary"])
+        query = Event.objects.get(summary__contains=self.obj["summary"], dt_start=self.obj["dt_start"], dt_end=self.obj["dt_end"])
         self.assertEqual(query.summary, self.obj["summary"])
