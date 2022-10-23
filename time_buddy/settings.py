@@ -37,6 +37,8 @@ LOGGING_CONFIG = None
 # Auth0-2 detials
 AUDIENCE = os.getenv('AUDIENCE')
 DOMAIN = os.getenv('DOMAIN')
+LOGIN_URL='/admin/login/'
+
 
 # Get loglevel from env
 LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
@@ -69,6 +71,7 @@ INSTALLED_APPS = [
     'time_buddy_events.apps.TimeBuddyEventsConfig',
     'time_buddy_support.apps.TimeBuddySupportConfig',
     'time_buddy_groups.apps.TimeBuddyGroupsConfig',
+    'auth0authenticator.apps.Auth0AuthenticatorConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,9 +82,19 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
+    'oauth2_provider'
+]
+
+AUTHENTICATION_BACKENDS = [
+    'oauth2_provider.backends.OAuth2Backend',
+    # Uncommment following if you want to access the admin'
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [
+    # If you use SessionAuthenticationMiddleware, be sure it appears before OAuth2TokenMiddleware.
+    # SessionAuthenticationMiddleware is NOT required for using django-oauth-toolkit.
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -90,9 +103,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
 
 CORS_ALLOWED_ALL_ORIGINS = True
+#CORS_ORIGIN_ALLOW_ALL = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -126,6 +142,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE':100
 }
+
+#set custom user class as user for authentication
+#AUTH_USER_MODEL='users.User'
+
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
