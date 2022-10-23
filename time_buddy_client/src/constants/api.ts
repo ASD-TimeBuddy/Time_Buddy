@@ -4,8 +4,13 @@ const PRODUCTION = 'https://time-buddy-app-zqdu8.ondigitalocean.app';
 
 // support uri constants
 const SUPPORT = '/support';
-const ORGS = '/organisation';
 const QUESTION_ANSWER = `${SUPPORT}/question-answer`;
+
+// organisation uri constants
+const ORGS = '/organisation';
+
+// events uri constants
+const EVENTS = '/events';
 
 // utility functions
 export const urlBuilder =
