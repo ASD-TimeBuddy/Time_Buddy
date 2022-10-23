@@ -14,7 +14,7 @@ class Time_Zone(models.Model):
         verbose_name_plural = 'Time_Zones'
 
     def __str__(self):
-        return self.tz_id
+        return self.tz_name
 # to be moved to another (USER) app
 class User(models.Model):
     user_id = models.UUIDField("user_id",primary_key=True,default=uuid.uuid4,editable=False)
@@ -45,7 +45,7 @@ class Event(models.Model):
     description = models.CharField("description", max_length=500)
     dt_start = models.DateTimeField("dt_start", auto_now=False, auto_now_add=False)
     dt_end = models.DateTimeField("dt_end", auto_now=False, auto_now_add=False)
-
+    attendees = models.ManyToManyField('User', related_name='attendance')
     class Meta:
         ordering = ['event_id']
         db_table = 'events'
@@ -54,22 +54,22 @@ class Event(models.Model):
         verbose_name_plural = 'Events'
 
     def __str__(self):
-        return self.event_id
+        return self.summary
         
-class Event_Attendance(models.Model):
-    attendance_id = models.UUIDField("insance_id",primary_key=True,default=uuid.uuid4,editable=False)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    user= models.ForeignKey(
-        User, 
-        #allow user to be missing
-        blank=False,
-        null=False, 
-        on_delete=models.CASCADE
-        )
+# class Event_Attendance(models.Model):
+#     attendance_id = models.UUIDField("insance_id",primary_key=True,default=uuid.uuid4,editable=False)
+#     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+#     user= models.ForeignKey(
+#         User, 
+#         #allow user to be missing
+#         blank=False,
+#         null=False, 
+#         on_delete=models.CASCADE
+#         )
 
-    class Meta:
-        ordering = ['attendance_id']
-        db_table = 'event_attendance'
-        managed = True
-        verbose_name = 'Event attendance'
-        verbose_name_plural = 'Event attendance'
+#     class Meta:
+#         ordering = ['attendance_id']
+#         db_table = 'event_attendance'
+#         managed = True
+#         verbose_name = 'Event attendance'
+#         verbose_name_plural = 'Event attendance'
