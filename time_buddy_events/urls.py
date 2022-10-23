@@ -1,10 +1,21 @@
-from django.urls import path
+from django.urls import include, path
+#from rest_framework import routers
+from rest_framework_nested import routers
 from . import views
+from .views import EventViewSet, UserViewSet, AttendeesViewSet
+
+router = routers.DefaultRouter()
+router.register(r'users',UserViewSet, basename='users')
+router.register(r'events',EventViewSet, basename='events')
+
+attendance_router = routers.NestedSimpleRouter(router, r'events', lookup='event')
+attendance_router.register(r'attendees', AttendeesViewSet, basename='attendees')
+#attendance_router.register(r'attendees/<:attendeeID:>', AttendeeDeleteView)
+# 'basename' is optional. Needed only if the same viewset is registered more than once
+# Official DRF docs on this option: http://www.django-rest-framework.org/api-guide/routers/
 
 urlpatterns = [
-    path('', views.api_overview, name='home'),
-    path('create/', views.add_events, name='add-events'),
-    path('all/', views.view_events, name='view_events'),
-    path('update/<uuid:pk>/', views.update_events, name='update-events'),
-    path('event/<uuid:pk>/delete',views.delete_events, name='delete-events'),
+    path(r'', include(router.urls)),
+    path(r'', include(attendance_router.urls)),
+    path('auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

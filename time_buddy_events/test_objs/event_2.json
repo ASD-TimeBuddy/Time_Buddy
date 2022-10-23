@@ -1,0 +1,17 @@
+{
+    "owner":"jamessmith9956",
+    "timezone":"AEST",
+    "location":"UTS b11",
+    "summary":"Interaction Design Tutorial",
+    "description": "Interaction design on campus class",
+    "dt_start":"2022-12-21 03:00:00",
+    "dt_end":"2022-12-21 05:00:00",
+    "sequence":0,
+    "status":"confirmed",
+    "repetition":"weekly",
+    "attendees": [
+        "c9898565-e305-48e6-b05a-5b03cbc563f3",
+        "bbff9064-537f-4135-9848-af422bea4aaa",
+        "bbff9064-537f-4135-9848-af422bea4aaa"
+    ]
+}
