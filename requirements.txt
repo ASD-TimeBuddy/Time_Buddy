@@ -2,6 +2,7 @@ python-dotenv==0.21.0
 Django==4.1
 django-filter==22.1
 djangorestframework==3.13.1
+django-rest-framework-nested==0.0.1
 django-cors-headers==3.13.0
 django-storages==1.13.1
 boto3==1.24.84
