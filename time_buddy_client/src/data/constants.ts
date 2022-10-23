@@ -1,4 +1,8 @@
-export const timezones = {
+export type TimezoneT = {
+  [key: string]: string;
+};
+
+export const timezones: TimezoneT = {
   'Pacific/Midway': 'Midway Island, Samoa',
   'Pacific/Honolulu': 'Hawaii',
   'America/Juneau': 'Alaska',
