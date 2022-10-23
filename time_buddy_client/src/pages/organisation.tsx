@@ -29,9 +29,9 @@ const Organisation = () => (
               Join an organisation.
             </Text>
             <FormControl isRequired>
-                <Input type='text' fontSize="sm" color="muted" placeholder='Enter a unique 6 digit ID' />
+                <Input type='text' fontSize="sm" color="muted" placeholder='Enter a unique 6 digit ID' value={organisation_id} />
             </FormControl>
-            <Button bg="bg-accent" color="on-accent" size='sm' width='100px' as={RRLink} to="/eventgroups">
+            <Button bg="bg-accent" color="on-accent" size='sm' width='100px' as={RRLink} to="/eventgroups" onClick={joinOrg}>
                 Join
             </Button>
           </Stack>
@@ -39,6 +39,11 @@ const Organisation = () => (
         </Stack>
       </Box>
     </Container>
-  );
+ );
+
+ const joinOrg = () =>  (
+    console.log('join organisation')
+
+ );
 
 export default Organisation;
