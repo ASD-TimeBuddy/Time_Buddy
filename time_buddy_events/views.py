@@ -1,12 +1,22 @@
+from argparse import Action
+from ast import Try
+from codecs import lookup
+import queue
+from urllib import response
+from webbrowser import get
 from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import serializers
-from rest_framework import status
+from rest_framework import routers, serializers, viewsets, status
+#https://auth0.com/docs/quickstart/webapp/django/01-login
+#from django.contrib.auth.models import User
 
-import time_buddy
-from .models import Event
-from .serializers import Event_Serializer
+from rest_framework import status
+from rest_framework import filters
+from rest_framework import generics
+from django.db import transaction
+from .models import Event, User, Attendance
+from .serializers import AttendanceSerializer, EventSerializer, UserSerializer
 # Create your views here.
 # based on https://www.geeksforgeeks.org/django-rest-api-crud-with-drf/
 
@@ -44,71 +54,58 @@ def private_scoped(request):
     response = "Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this."
     return JsonResponse(dict(message=response))
 
-# for info on decorators see - https://stackoverflow.com/questions/6392739/what-does-the-at-symbol-do-in-python
-# @api_view passes the decorated fuction as an argument in the api_view function
-@api_view(['GET'])
-def api_overview(request): #pass in html request
-    api_urls = {
-        'all_events': '/',
-        'Search by User': '/?user=user_name',
-        'Search by Summary': '/?summary=summary_text',
-        'Add': '/create',
-        'Update': '/update/pk',
-        'Delete': '/event/pk/delete'
-    }
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-    return Response(api_urls)
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
 
-# add events using only : 'location','summary','description'
-@api_view(['POST'])
-def add_events(request):
-    event = Event_Serializer(data=request.data)
 
-    # validating for already existing data
-    if Event.objects.filter(**request.data).exists():
-        raise serializers.ValidationError('This data already exists')
+class AttendeesViewSet(viewsets.ModelViewSet):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
     
-    if event.is_valid():
-        event.save()
-        return Response(event.data)
-    else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-@api_view(['GET'])
-def view_events(request):
-    #any decrypting or user ID should probably happen here
-
-    #checking for the parameters from the URL 
-    if request.query_params:
-        #should clean query params before passing
-        events = Event.objects.filter(**request.query_params.dict())
-    else:
-        #delete <>
-        events = Event.objects.all()
-
-    #return any events found, else 404 not found.
-    if events:
-        #force multiple values in serializer, else API can't find fields
-        serializer = Event_Serializer(events, many=True)
+    # def list(self, request, event_pk=None):
+    #     event = self.queryset.filter(event_id=event_pk)
+    #     attendees = Attendance.objects.filter(event__in=event)
+    #     serializer = AttendanceSerializer(attendees, many=True)
+        
+    #     return Response(serializer.data) 
+    
+    # redefine retreive to search on event & user instead of hidden PK
+    def retrieve(self, request, pk=None, event_pk=None):
+        attendees = self.queryset.get(user=pk, event_id=event_pk)
+        serializer = AttendanceSerializer(attendees, many=False)
         return Response(serializer.data)
-    else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-@api_view(['POST'])
-def update_events(request, pk):
-    #retrive related entry from model
-    event = Event.objects.get(pk=pk)
-    data = Event_Serializer(instance=event, data=request.data)
-
-    #if input data is valid, update record and return new data.
-    if data.is_valid():
-        data.save()
-        return Response(data.data)
-    else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-@api_view(['DELETE'])
-def delete_events(request, pk):
-    event = get_object_or_404(Event, pk=pk)
-    event.delete()
-    return Response(status=status.HTTP_202_ACCEPTED)
+    
+    #need to update for multiple invitees in future
+    #@transaction.atomic
+    def create(self, request, event_pk):
+        data = {
+            'event':request.POST.get('event'),
+            'user':request.POST.get('user')
+            #'event':event_pk,
+            #'user':pk
+        }
+        serializer = AttendanceSerializer(data=data, many=False)
+        user = User(data.pop('user'))
+        try: 
+            User.objects.get(user)
+        except:
+            return Response(status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            serializer.create(serializer.validated_data)
+            return Response(serializer.data)
+        return Response(status.HTTP_400_BAD_REQUEST)
+        
+            
+    def destroy(self, request, event_pk, pk):
+        try:
+            self.queryset.get(event=event_pk,user=pk).delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except: 
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+                
+                
