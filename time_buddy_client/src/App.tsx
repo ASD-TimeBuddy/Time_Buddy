@@ -1,6 +1,5 @@
 import { Box, Container } from '@chakra-ui/react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-
 import Home from './pages/home';
 import TimeConverter from './pages/time-converter';
 import Calendar from './pages/calendar';
