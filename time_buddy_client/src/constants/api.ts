@@ -20,7 +20,7 @@ export const urlBuilder =
 export const devBuilder = urlBuilder(DEVELOPMENT);
 export const prodBuilder = urlBuilder(PRODUCTION);
 
-export const reqUriBuilder = devBuilder;
+export const reqUriBuilder = prodBuilder;
 
 // support urls
 export const questionUrlBuilder = reqUriBuilder(QUESTION_ANSWER);
