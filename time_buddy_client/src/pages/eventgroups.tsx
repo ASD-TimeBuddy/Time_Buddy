@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link as RRLink } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -37,7 +38,7 @@ const EventGroup = () => {
                 fontSize="sm"
                 color="muted"
                 placeholder="Enter password"
-                value={groupPassword}
+                defaultValue={groupPassword}
               />
             </FormControl>
 
@@ -46,6 +47,8 @@ const EventGroup = () => {
               color="on-accent"
               size="sm"
               width="100px"
+              as={RRLink}
+              to="/events"
               onClick={joinGroup}
             >
               Join

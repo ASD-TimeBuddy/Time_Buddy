@@ -36,5 +36,6 @@ urlpatterns = [
     path('events/', include('time_buddy_events.urls')),
     path('support/', include('time_buddy_support.urls')),
     path('organisations/', include('time_buddy_groups.urls')),
+    path('eventgroups/', include('time_buddy_groups.urls')),
     path('admin/', admin.site.urls),
 ]

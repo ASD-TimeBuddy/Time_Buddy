@@ -6,6 +6,7 @@ import Events from './pages/events';
 import Support from './pages/support';
 import Navbar from './components/navbar';
 import Organisation from './pages/organisation';
+import EventGroup from './pages/eventgroups';
 
 const Layout = () => (
   <Box height="100vh" overflowY="auto">
@@ -23,6 +24,7 @@ const App = () => (
       <Route path="time-converter" element={<TimeConverter />} />
       <Route path="events" element={<Events />} />
       <Route path="organisation" element={<Organisation />} />
+      <Route path="eventgroups" element={<EventGroup />} />
       <Route path="support" element={<Support />} />
     </Route>
   </Routes>

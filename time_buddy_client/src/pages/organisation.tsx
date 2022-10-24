@@ -38,7 +38,7 @@ const Organisation = () => {
                 fontSize="sm"
                 color="muted"
                 placeholder="Enter a unique 6 digit ID"
-                value={organisationId}
+                defaultValue={organisationId}
               />
             </FormControl>
             <Button
