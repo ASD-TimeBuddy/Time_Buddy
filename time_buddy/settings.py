@@ -30,7 +30,7 @@ if DEBUG:
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 LOGGING_CONFIG = None
 
@@ -64,6 +64,7 @@ logging.config.dictConfig({
 INSTALLED_APPS = [
     'time_buddy_events.apps.TimeBuddyEventsConfig',
     'time_buddy_support.apps.TimeBuddySupportConfig',
+    'time_buddy_groups.apps.TimeBuddyGroupsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,7 +88,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -115,6 +116,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'time_buddy.wsgi.application'
 
+# pagination class attrubutes none by default, also accesible through pagination_class view attribute
+# https://www.django-rest-framework.org/api-guide/pagination/#setting-the-pagination-style
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE':100
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -127,6 +134,7 @@ DATABASES = {
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': os.getenv('DATABASE_HOST'),
     }
+    
 }
 
 # Static files (CSS, JavaScript, Images)
@@ -134,20 +142,22 @@ DATABASES = {
 
 # Moving static assets to DigitalOcean Spaces as per:
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-object-storage-with-django
-AWS_ACCESS_KEY_ID = os.getenv('STATIC_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('STATIC_SECRET_KEY')
+if not DEBUG:
+    AWS_ACCESS_KEY_ID = os.getenv('STATIC_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('STATIC_SECRET_KEY')
 
-AWS_STORAGE_BUCKET_NAME = os.getenv('STATIC_BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = os.getenv('STATIC_ENDPOINT_URL')
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'static'
-AWS_DEFAULT_ACL = 'public-read'
+    AWS_STORAGE_BUCKET_NAME = os.getenv('STATIC_BUCKET_NAME')
+    AWS_S3_ENDPOINT_URL = os.getenv('STATIC_ENDPOINT_URL')
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    AWS_LOCATION = 'static'
+    AWS_DEFAULT_ACL = 'public-read'
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+    STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+
 STATIC_ROOT = 'static/'
 
 

@@ -6,6 +6,12 @@ const PRODUCTION = 'https://time-buddy-app-zqdu8.ondigitalocean.app';
 const SUPPORT = '/support';
 const QUESTION_ANSWER = `${SUPPORT}/question-answer`;
 
+// organisation uri constants
+const ORGS = '/organisations';
+
+// events uri constants
+const EVENTS = '/events/events';
+
 // utility functions
 export const urlBuilder =
   (host: string) => (uri: string) => (queryParams?: string) =>
@@ -18,3 +24,5 @@ export const reqUriBuilder = prodBuilder;
 
 // support urls
 export const questionUrlBuilder = reqUriBuilder(QUESTION_ANSWER);
+export const orgsUrlBuilder = reqUriBuilder(ORGS);
+export const eventsUrlBuilder = reqUriBuilder(EVENTS);

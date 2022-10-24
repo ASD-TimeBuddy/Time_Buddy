@@ -20,7 +20,6 @@ import Logo from './logo';
 import NavButton from './nav-button';
 import AuthView from './auth/auth-view';
 
-
 const Sidebar = () => (
   <Flex as="section" minH="100vh" bg="bg-canvas">
     <Flex
@@ -47,12 +46,8 @@ const Sidebar = () => (
               label="International Time Converter"
               icon={FiClock}
             />
-            <NavButton to="/calendar" label="Calendar" icon={FiCalendar} />
-            <NavButton
-              to="/login"
-              label="Login"
-              icon={FiUser}
-            />
+            <NavButton to="/events" label="Events" icon={FiCalendar} />
+            <NavButton to="/login" label="Login" icon={FiUser} />
           </Stack>
         </Stack>
         <Stack spacing={{ base: '5', sm: '6' }}>

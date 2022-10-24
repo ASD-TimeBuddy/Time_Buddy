@@ -12,6 +12,7 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'off',
+    '@typescript-eslint/naming-convention': 'warn',
     'react/function-component-definition': [
       2,
       { namedComponents: 'arrow-function' },
