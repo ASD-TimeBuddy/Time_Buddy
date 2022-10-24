@@ -8,6 +8,7 @@ const Home = () => (
       borderRadius="lg"
       p={{ base: '7', md: '150' }}
     >
+      <Text fontSize="4xl">Title</Text>
       <Text fontSize="4xl" fontWeight="bold" color="#339999">
         This is an easy-to-use time zone conversion software developed for
         multinational corporations, which can be used for meeting scheduling and
