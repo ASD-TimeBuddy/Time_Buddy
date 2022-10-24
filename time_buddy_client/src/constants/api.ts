@@ -7,10 +7,10 @@ const SUPPORT = '/support';
 const QUESTION_ANSWER = `${SUPPORT}/question-answer`;
 
 // organisation uri constants
-const ORGS = '/organisation';
+const ORGS = '/organisations';
 
 // events uri constants
-const EVENTS = '/events';
+const EVENTS = '/events/events';
 
 // utility functions
 export const urlBuilder =
@@ -25,3 +25,4 @@ export const reqUriBuilder = devBuilder;
 // support urls
 export const questionUrlBuilder = reqUriBuilder(QUESTION_ANSWER);
 export const orgsUrlBuilder = reqUriBuilder(ORGS);
+export const eventsUrlBuilder = reqUriBuilder(EVENTS);
