@@ -2,9 +2,6 @@ name: time-buddy-app
 region: sgp
 services:
 - envs:
-  - key: DJANGO_DEBUG
-    scope: RUN_AND_BUILD_TIME
-    value: false
   - key: DJANGO_LOGLEVEL
     scope: RUN_AND_BUILD_TIME
     value: error
@@ -41,6 +38,9 @@ services:
   - key: DJANGO_ALLOWED_HOSTS
     scope: RUN_AND_BUILD_TIME
     value: time-buddy-app-zqdu8.ondigitalocean.app
+  - key: DJANGO_DEBUG
+    scope: RUN_AND_BUILD_TIME
+    value: "false"
   http_port: 8000
   image:
     registry: bebopbamf
